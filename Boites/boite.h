@@ -1,7 +1,16 @@
-#pragma
-#include"typeboite.h"
-#include"uneboite.h"
-using namespace std;
+#ifndef BOITE
+#define BOITE
+
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <memory>
+#include <iostream>
+
+class TypeBoite;
+class UneBoite;
+class ComboVertical;
+class ComboHorizontal;
 
 class Boite
 {
@@ -52,3 +61,4 @@ ostream& operator<<(ostream& os, Boite& bt)
 	os << "+" << endl;
 	return os;
 };
+#endif

@@ -146,6 +146,8 @@
     <ClCompile Include="combohorizontal.cpp" />
     <ClCompile Include="combovertical.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="typeboite.cpp" />
+    <ClCompile Include="uneboite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boite.h" />

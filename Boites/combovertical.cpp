@@ -1,6 +1,7 @@
 #pragma once
+#include"typeboite.h"
 #include"combovertical.h"
-
+#include"boite.h"
 
 ComboVertical::ComboVertical() {};
 ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)

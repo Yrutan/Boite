@@ -1,5 +1,8 @@
-#pragma once
-#include"typeboite.h"
+#ifndef COMBOHORIZONTAL
+#define COMBOHORIZONTAL
+
+class TypeBoite;
+class Boite;
 
 struct Iterateur_ComboHorizontal : Iterateur_Boite<string>
 {
@@ -26,3 +29,7 @@ public:
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur();
 
 };
+
+
+
+#endif

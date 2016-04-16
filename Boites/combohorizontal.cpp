@@ -1,5 +1,8 @@
 #pragma once
+#include"typeboite.h"
 #include"combohorizontal.h"
+#include"boite.h"
+
 
 	ComboHorizontal::ComboHorizontal() {};
 	//ComboHorizontal(Boite boite1, Boite boite2) {};

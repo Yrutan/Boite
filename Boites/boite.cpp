@@ -1,5 +1,9 @@
-#pragma
+#pragma once
+#include "typeboite.h"
 #include"boite.h"
+#include"uneboite.h"
+#include"combohorizontal.h"
+#include"combovertical.h"
 using namespace std;
 
 
@@ -10,8 +14,8 @@ Boite::Boite(string texte) :boite{ std::move(new UneBoite(texte)) } {};
 Boite::Boite(const TypeBoite& boite) :boite{ std::move(boite.cloner()) } { };
 
 
-int Boite::getHauteur() const { return boite->getHauteur(); }
-int Boite::getLargeur() const { return boite->getLargeur(); }
+int Boite::getHauteur() const { return boite->getHauteur(); };
+int Boite::getLargeur() const { return boite->getLargeur(); };
 
 std::unique_ptr<Iterateur_Boite<string>> Boite::enumerateur()
 {

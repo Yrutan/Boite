@@ -1,4 +1,8 @@
-#pragma once
+
+
+#ifndef TYPEBOITE
+#define TYPEBOITE
+
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -27,9 +31,6 @@ protected:
 	
 
 public:
-
-	virtual std::unique_ptr<Iterateur_Boite<string>> enumerateur() = 0;
-
 	TypeBoite() { largeur = 0; hauteur = 0; };
 	TypeBoite(string texte)
 	{
@@ -65,6 +66,9 @@ public:
 
 	virtual unique_ptr<TypeBoite> cloner() const = 0;
 
+	virtual std::unique_ptr<Iterateur_Boite<string>> enumerateur() = 0;
+
+
 	void redimensionner()
 	{
 		hauteur = 0;
@@ -84,3 +88,4 @@ public:
 
 };
 
+#endif

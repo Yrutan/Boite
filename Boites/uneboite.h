@@ -1,5 +1,7 @@
-#pragma once
-#include"typeboite.h"
+#ifndef UNEBOITE
+#define UNEBOITE
+
+class TypeBoite;
 
 struct Iterateur_UneBoite : Iterateur_Boite<string>
 {
@@ -17,18 +19,16 @@ class UneBoite : public TypeBoite
 {
 public:
 	UneBoite() {};
-	UneBoite(string texte) : TypeBoite(texte) {};
+	UneBoite(string texte);
 
-	unique_ptr<TypeBoite> cloner() const
-	{
-		return unique_ptr<TypeBoite>{new UneBoite};
-	};
+	unique_ptr<TypeBoite> cloner() const;
 
-	std::unique_ptr<Iterateur_Boite<string>> enumerateur()
-	{
-		return std::make_unique<Iterateur_UneBoite>(this->lignes);
-	};
+	std::unique_ptr<Iterateur_Boite<string>> enumerateur();
 
-	string toString() const { return this->getTexte(); };
+	string toString() const;
 
 };
+
+
+
+#endif

@@ -1,6 +1,8 @@
-#pragma once
-#include"typeboite.h"
-#include"boite.h"
+#ifndef COMBOVERTICAL
+#define COMBOVERTICAL
+
+class TypeBoite;
+class Boite;
 
 struct Iterateur_ComboVertical : Iterateur_Boite<string>
 {
@@ -28,3 +30,6 @@ public:
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur();
 
 };
+
+
+#endif
