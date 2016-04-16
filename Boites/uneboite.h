@@ -1,5 +1,5 @@
-#ifndef UNEBOITE
-#define UNEBOITE
+#ifndef UNEBOITE_H
+#define UNEBOITE_H
 
 class TypeBoite;
 
@@ -18,12 +18,12 @@ public:
 class UneBoite : public TypeBoite
 {
 public:
-	UneBoite() {};
+	UneBoite();
 	UneBoite(string texte);
 
 	unique_ptr<TypeBoite> cloner() const;
 
-	std::unique_ptr<Iterateur_Boite<string>> enumerateur();
+	std::unique_ptr<Iterateur_Boite<string>> enumerateur()const;
 
 	string toString() const;
 

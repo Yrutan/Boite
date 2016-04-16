@@ -1,7 +1,5 @@
-
-
-#ifndef TYPEBOITE
-#define TYPEBOITE
+#ifndef TYPEBOITE_H
+#define TYPEBOITE_H
 
 #include <string>
 #include <vector>
@@ -20,6 +18,7 @@ public:
 	virtual ~Iterateur_Boite() = default;
 };
 
+
 class TypeBoite
 {
 protected:
@@ -28,63 +27,20 @@ protected:
 
 	std::vector<string> lignes;
 
-	
-
 public:
-	TypeBoite() { largeur = 0; hauteur = 0; };
-	TypeBoite(string texte)
-	{
-		hauteur = 0;
-		largeur = 0;
-		int index;
-		while (texte.length() > 0)
-		{
-			index = texte.find("\n");
-			if (index != string::npos)
-			{
-				lignes.push_back(texte.substr(0, index));
-				texte = texte.substr(index + 1);
-			}
-			else
-			{
-				lignes.push_back(texte.substr(0, texte.size()));
-				texte = "";
-			}
-		}
-		redimensionner();
-	};
+	TypeBoite();
+	TypeBoite(string texte);
 
-	string getTexte() const
-	{
-		string texte = "";
-		for each (string ligne in lignes)
-		{
-			texte += ligne + "\n";
-		}
-		return texte;
-	}
+	string getTexte() const;
 
 	virtual unique_ptr<TypeBoite> cloner() const = 0;
 
-	virtual std::unique_ptr<Iterateur_Boite<string>> enumerateur() = 0;
+	virtual std::unique_ptr<Iterateur_Boite<string>> enumerateur() const = 0;
 
+	void redimensionner();
 
-	void redimensionner()
-	{
-		hauteur = 0;
-		for each (string ligne in this->lignes)
-		{
-			if (ligne.length() > this->largeur)
-			{
-				largeur = ligne.length();
-			}
-			hauteur++;
-		}
-	};
-
-
-	int getHauteur() const { return this->hauteur; }
-	int getLargeur() const { return this->largeur; }
+	int getHauteur() const;
+	int getLargeur() const;
 
 };
 

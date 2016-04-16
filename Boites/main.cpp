@@ -1,4 +1,6 @@
 #include "boite.h"
+#include "combovertical.h"
+#include "combohorizontal.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -7,14 +9,18 @@ int main()
 {
 	using namespace std;
 	Boite b;
-	cout << b << endl;
+	cout << b;
+	cout << endl;
 	string texte = R"(Man! Hey!!!
 ceci est un test
 multiligne)";
 	string aut_texte = "Ceci\nitou, genre";
 	Boite b0{ texte };
 	Boite b1{ aut_texte };
-	cout << b0 << endl << b1 << endl;
+	cout << b0;
+	cout << endl; 
+	cout << b1;
+	cout << endl;/*
 	ComboVertical cv{ b0, b1 };
 	cout << Boite{ cv } << endl;/*
 	ComboHorizontal ch{ b0, b1 };

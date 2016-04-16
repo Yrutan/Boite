@@ -1,21 +1,22 @@
-#ifndef BOITE
-#define BOITE
+#ifndef BOITE_H
+#define BOITE_H
 
 #include <string>
 #include <vector>
-#include <algorithm>
 #include <memory>
 #include <iostream>
+using namespace std;
 
 class TypeBoite;
-class UneBoite;
-class ComboVertical;
 class ComboHorizontal;
+class ComboVertical;
+template <class T>
+struct Iterateur_Boite;
 
 class Boite
 {
-	unique_ptr<TypeBoite> boite;
-
+private:
+	std::unique_ptr<TypeBoite> boite;
 public:
 
 	Boite();
@@ -25,40 +26,13 @@ public:
 	int getHauteur() const;
 	int getLargeur() const;
 
-	std::unique_ptr<Iterateur_Boite<string>> enumerateur();
+	std::unique_ptr<Iterateur_Boite<string>> enumerateur() const;
+
+
+	string toString() const;
+	friend const std::ostream& operator<<(std::ostream& os, const Boite& bt);
 };
 
-ostream& operator<<(ostream& os, Boite& bt)
-{
-	int largeur = bt.getLargeur();
-	os << "+";
-	for (int i = 0; i < largeur; i++) { os << "-"; }
-	os << "+" << endl;
 
-	//contenu de la boite
 
-	unique_ptr<Iterateur_Boite<string>> enumerateur = bt.enumerateur();
-
-	while (enumerateur->has_next())
-	{
-		enumerateur->next();
-		os << "|" << enumerateur->current();
-		int largeur_ligne = enumerateur->current().length();
-		if (largeur_ligne < bt.getLargeur())
-		{
-			for (int i = largeur_ligne; i < bt.getLargeur(); i++)
-			{
-				cout << " ";
-			}
-		}
-		cout << "|" << endl;
-	}
-
-	// fin du contenu de la boite
-
-	os << "+";
-	for (int i = 0; i < largeur; i++) { os << "-"; }
-	os << "+" << endl;
-	return os;
-};
 #endif
