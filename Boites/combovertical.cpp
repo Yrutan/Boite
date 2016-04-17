@@ -15,26 +15,41 @@ private:
 	int largeur_boite_un, largeur_boite_deux, hauteur_boite;
 public:
 	Iterateur_ComboVertical(const std::vector<string> &liste) 
-		:liste{liste}, debut{ true }
+		:liste{ liste }, debut{ true }, largeur_boite_un{ 0 }, 
+		largeur_boite_deux{ 0 }, hauteur_boite{0}
 	{
 		bool separateur = false;
-		for each (string ligne in liste)
+
+		auto it = liste.begin();
+
+		for (; it != liste.end() && !separateur; ++it, ++hauteur_boite)
 		{
-			if (ligne != "\n\n")
+			if (*it != "\n\n")
 			{
-				if (!separateur)
+				boite_un.push_back(*it);
+				if (it->length() > largeur_boite_un)
 				{
-					boite_un.push_back(ligne);
-				}
-				else
-				{
-					boite_deux.push_back(ligne);
+					largeur_boite_un = it->length();
 				}
 			}
 			else
 			{
 				separateur = true;
 			}
+		}
+		int hauteur_boite_deux = 0;
+		for (; it != liste.end() && !separateur; ++it, ++hauteur_boite_deux)
+		{
+			boite_deux.push_back(*it);
+			if (it->length() > largeur_boite_deux)
+			{
+				largeur_boite_deux = it->length();
+			}
+		}
+
+		if (hauteur_boite_deux > hauteur_boite)
+		{
+			hauteur_boite = hauteur_boite_deux;
 		}
 		courant_boite_un = boite_un.begin();
 		fin_boite_un = boite_un.end();
