@@ -17,11 +17,8 @@ multiligne)";
 	string aut_texte = "Ceci\nitou, genre";
 	Boite b0{ texte };
 	Boite b1{ aut_texte };
-	cout << b0; 
-	cout << endl << b1;
-	cout << endl;
 	cout << b0 << endl << b1 << endl;
-	ComboVertical cv{ b0, b1 };/*
+	ComboVertical cv{ b0, b1 };
 	cout << Boite{ cv } << endl;/*
 	ComboHorizontal ch{ b0, b1 };/*
 	cout << Boite{ ch } << endl;/*

@@ -8,7 +8,7 @@ Boite::Boite() :boite{ std::move(new UneBoite()) } {};
 
 Boite::Boite(string texte) :boite{ std::move(new UneBoite(texte)) } {};
 
-Boite::Boite(const TypeBoite& boite) :boite{ std::move(boite.cloner()) } { };
+Boite::Boite(const ComboVertical& cv) :boite{ std::move(cv.cloner()) } {};
 
 int Boite::getHauteur() const { return boite->getHauteur(); };
 int Boite::getLargeur() const { return boite->getLargeur(); };
@@ -44,16 +44,35 @@ string Boite::getTexte() const
 std::ostream& operator<<(std::ostream& os, const Boite& bt)
 {
 	// cadre du débute de la boite
-	os << "+";
-	for (int i = 0; i < bt.getLargeur(); ++i) { os << "-"; }
-	os << "+\n";
+	os << '+';
+	for (int i = 0; i < bt.getLargeur(); ++i) { os << '-'; }
+	os << '+' << endl;
 	//début du contenu de la boite
-	os << bt.getTexte();
+	int largeur = bt.getLargeur();
+	int hauteur = bt.getHauteur();
+	string ligne = "";
+	unique_ptr<Iterateur_Boite<string>> iterateur = bt.enumerateur();
+	while (iterateur->has_next())
+	{
+		ligne.clear();
+		iterateur->next();
+		ligne += '|' + iterateur->current();
+		int largeur_ligne = iterateur->current().length();
+		if (largeur_ligne < largeur)
+		{
+			for (int i = largeur_ligne; i < largeur; ++i)
+			{
+				ligne += ' ';
+			}
+		}
+		ligne += '|';
+		os << ligne << endl;;
+	}
 	// fin du contenu de la boite
 	// cadre de la fin de la boite
-	os << "+";
-	for (int i = 0; i < bt.getLargeur(); ++i) { os << "-"; }
-	os << "+";
+	os << '+';
+	for (int i = 0; i < bt.getLargeur(); ++i) { os << '-'; }
+	os << '+';
 
 	return os;
 };

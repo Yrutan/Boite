@@ -20,6 +20,7 @@ private:
 public:
 	Boite();
 	Boite(string texte);
+	Boite(const ComboVertical& cv);
 	Boite(const TypeBoite& boite);
 
 	int getHauteur() const;

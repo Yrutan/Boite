@@ -5,16 +5,16 @@ void TypeBoite::extraireLignes(vector<string>& lignes, string texte)
 	int index;
 	while (texte.length() > 0)
 	{
-		index = texte.find("\n");
+		index = texte.find('\n');
 		if (index != string::npos)
 		{
 			lignes.push_back(texte.substr(0, index));
-			texte = texte.substr(index + 1);
+			texte = texte.substr(index + 1);// +1 pour enlever le '\n'
 		}
-		else
+		else // Lorsqu'il ne reste plus de saut de ligne
 		{
-			lignes.push_back(texte);
-			texte.clear();
+			lignes.push_back(texte); // on prend le reste du texte
+			texte.clear();// on vide la variable pour sortir de la boucle
 		}
 	}
 }

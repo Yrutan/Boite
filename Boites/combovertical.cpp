@@ -19,9 +19,7 @@ public:
 		largeur_boite_deux{ 0 }, hauteur_boite{0}
 	{
 		bool separateur = false;
-
 		auto it = liste.begin();
-
 		for (; it != liste.end() && !separateur; ++it, ++hauteur_boite)
 		{
 			if (*it != "\n\n")
@@ -35,6 +33,7 @@ public:
 			else
 			{
 				separateur = true;
+				//++it; // pour passer par-dessus la ligne qui sépare les deux boites.
 			}
 		}
 		int hauteur_boite_deux = 0;
@@ -46,7 +45,6 @@ public:
 				largeur_boite_deux = it->length();
 			}
 		}
-
 		if (hauteur_boite_deux > hauteur_boite)
 		{
 			hauteur_boite = hauteur_boite_deux;
@@ -75,6 +73,7 @@ public:
 		{
 			sortie += terminerLigne(largeur_boite_un);
 		}
+		sortie += "|";
 		if (courant_boite_deux != fin_boite_deux)
 		{
 			sortie += *courant_boite_deux;
