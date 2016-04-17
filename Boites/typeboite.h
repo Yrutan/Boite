@@ -24,14 +24,11 @@ class TypeBoite
 protected:
 	int hauteur;
 	int largeur;
-
 	std::vector<string> lignes_boite_un;
 
 public:
 	TypeBoite();
 	TypeBoite(string texte);
-
-	string getTexte() const;
 
 	virtual unique_ptr<TypeBoite> cloner() const = 0;
 
@@ -41,7 +38,8 @@ public:
 
 	int getHauteur() const;
 	int getLargeur() const;
-
+	string getTexte() const;
+	string getTexteBoiteUn() const;
 };
 
 #endif

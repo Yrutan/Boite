@@ -8,8 +8,8 @@
 
 class ComboVertical : TypeBoite
 {
-private:
-	unique_ptr<TypeBoite> deuxieme_boite;
+protected:
+	std::vector<string> lignes_boite_deux;
 public:
 	ComboVertical();
 	ComboVertical(const Boite & boite_un, const Boite & boite_deux);
@@ -18,6 +18,7 @@ public:
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur()const;
 
+	string getTexte() const;
 	string getTexteBoiteUn() const;
 	string getTexteBoiteDeux() const;
 

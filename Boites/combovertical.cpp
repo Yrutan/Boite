@@ -33,3 +33,32 @@ std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 {
 	return std::make_unique<Iterateur_ComboVertical>(this->lignes_boite_un);
 };
+
+string ComboVertical::getTexte() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); it++)
+	{
+		texte += texte + "\n";
+	}
+	return texte;
+}
+
+string ComboVertical::getTexteBoiteUn() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); it++)
+	{
+		texte += texte + "\n";
+	}
+	return texte;
+}
+string ComboVertical::getTexteBoiteDeux() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); it++)
+	{
+		texte += texte + "\n";
+	}
+	return texte;
+}

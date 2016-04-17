@@ -19,7 +19,7 @@ std::unique_ptr<Iterateur_Boite<string>> Boite::enumerateur() const
 };
 
 
-string Boite::toString() const
+string Boite::getTexte() const
 {
 	int largeur = getLargeur();
 	string texte = "+";
@@ -55,6 +55,6 @@ string Boite::toString() const
 
 std::ostream& operator<<(std::ostream& os, const Boite& bt)
 {
-	os << bt.toString();
+	os << bt.getTexte();
 	return os;
 };
