@@ -17,7 +17,7 @@
 
 	std::unique_ptr<Iterateur_Boite<string>> UneBoite::enumerateur() const
 	{
-		return std::make_unique<Iterateur_UneBoite>(this->lignes);
+		return std::make_unique<Iterateur_UneBoite>(this->lignes_boite_un);
 	};
 
 	string UneBoite::toString() const { return this->getTexte(); };

@@ -11,12 +11,12 @@ TypeBoite::TypeBoite(string texte)
 			index = texte.find("\n");
 			if (index != string::npos)
 			{
-				lignes.push_back(texte.substr(0, index));
+				lignes_boite_un.push_back(texte.substr(0, index));
 				texte = texte.substr(index + 1);
 			}
 			else
 			{
-				lignes.push_back(texte.substr(0, texte.size()));
+				lignes_boite_un.push_back(texte.substr(0, texte.size()));
 				texte = "";
 			}
 		}
@@ -26,7 +26,7 @@ TypeBoite::TypeBoite(string texte)
 	string TypeBoite::getTexte() const
 	{
 		string texte = "";
-		for each (string ligne in lignes)
+		for each (string ligne in lignes_boite_un)
 		{
 			texte += ligne + "\n";
 		}
@@ -35,7 +35,7 @@ TypeBoite::TypeBoite(string texte)
 	void TypeBoite::redimensionner()
 	{
 		hauteur = 0;
-		for each (string ligne in this->lignes)
+		for each (string ligne in this->lignes_boite_un)
 		{
 			if (ligne.length() > this->largeur)
 			{

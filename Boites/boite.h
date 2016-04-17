@@ -18,7 +18,6 @@ class Boite
 private:
 	std::unique_ptr<TypeBoite> boite;
 public:
-
 	Boite();
 	Boite(string texte);
 	Boite(const TypeBoite& boite);

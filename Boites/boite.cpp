@@ -4,9 +4,6 @@
 #include"combovertical.h"
 #include"boite.h"
 
-
-
-
 Boite::Boite() :boite{ std::move(new UneBoite()) } {};
 
 Boite::Boite(string texte) :boite{ std::move(new UneBoite(texte)) } {};

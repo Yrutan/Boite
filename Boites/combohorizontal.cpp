@@ -15,15 +15,38 @@ public:
 	void next() { if (!debut) { ++courant; }debut = {}; };
 };
 
-ComboHorizontal::ComboHorizontal() {};
-//ComboHorizontal(Boite boite1, Boite boite2) {};
+
+ComboHorizontal::ComboHorizontal(Boite boite1, Boite boite2)
+{
+
+};
 
 unique_ptr<TypeBoite> ComboHorizontal::cloner() const
 {
-	return unique_ptr<TypeBoite>{new ComboHorizontal};
+	return unique_ptr<TypeBoite>{new ComboHorizontal(Boite(getTexteBoiteUn()),Boite())};
 }
 
 std::unique_ptr<Iterateur_Boite<string>> ComboHorizontal::enumerateur() const
 {
-	return std::make_unique<Iterateur_ComboHorizontal>(this->lignes);
+	return std::make_unique<Iterateur_ComboHorizontal>(this->lignes_boite_un);
 };
+
+
+string ComboHorizontal::getTexteBoiteUn() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); it++)
+	{
+		texte += texte + "\n";
+	}
+	return texte;
+}
+string ComboHorizontal::getTexteBoiteDeux() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); it++)
+	{
+		texte += texte + "\n";
+	}
+	return texte;
+}

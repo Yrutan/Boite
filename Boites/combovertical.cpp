@@ -31,5 +31,5 @@ unique_ptr<TypeBoite> ComboVertical::cloner() const
 
 std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 {
-	return std::make_unique<Iterateur_ComboVertical>(this->lignes);
+	return std::make_unique<Iterateur_ComboVertical>(this->lignes_boite_un);
 };

@@ -25,7 +25,7 @@ protected:
 	int hauteur;
 	int largeur;
 
-	std::vector<string> lignes;
+	std::vector<string> lignes_boite_un;
 
 public:
 	TypeBoite();

@@ -18,6 +18,9 @@ public:
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur()const;
 
+	string getTexteBoiteUn() const;
+	string getTexteBoiteDeux() const;
+
 };
 
 
