@@ -12,6 +12,7 @@ private:
 	std::vector<string>::const_iterator courant_boite_un, fin_boite_un,
 		courant_boite_deux, fin_boite_deux;
 	bool debut;
+	int largeur_boite_un, largeur_boite_deux, hauteur_boite;
 public:
 	Iterateur_ComboVertical(const std::vector<string> &liste) 
 		:liste{liste}, debut{ true }
@@ -40,8 +41,8 @@ public:
 		courant_boite_deux = boite_deux.begin();
 		fin_boite_deux = boite_deux.end();
 	};
-
-	string filling() const{return "";}
+	string terminerLigne(const int& nb_espace_manquant) const
+	{ return std::string(nb_espace_manquant, ' '); };
 
 	string current() const 
 	{ 
@@ -53,15 +54,15 @@ public:
 		}
 		else
 		{
-			sortie += filling();
+			sortie += terminerLigne(largeur_boite_un);
 		}
-		if (courant_boite_deux == fin_boite_deux)
+		if (courant_boite_deux != fin_boite_deux)
 		{
 			sortie += *courant_boite_deux;
 		}
 		else
 		{
-			sortie += filling();
+			sortie += terminerLigne(largeur_boite_deux);
 		}
 		return sortie; 
 	};
