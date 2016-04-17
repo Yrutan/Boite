@@ -22,14 +22,8 @@ std::unique_ptr<Iterateur_Boite<string>> Boite::enumerateur() const
 string Boite::getTexte() const
 {
 	int largeur = getLargeur();
-	string texte = "+";
-	for (int i = 0; i < largeur; i++) { texte += "-"; }
-	texte += "+\n";
-
-	//contenu de la boite
-
+	string texte = "";
 	unique_ptr<Iterateur_Boite<string>> iterateur = enumerateur();
-
 	while (iterateur->has_next())
 	{
 		iterateur->next();
@@ -37,24 +31,29 @@ string Boite::getTexte() const
 		int largeur_ligne = iterateur->current().length();
 		if (largeur_ligne < getLargeur())
 		{
-			for (int i = largeur_ligne; i < getLargeur(); i++)
+			for (int i = largeur_ligne; i < getLargeur(); ++i)
 			{
 				texte += " ";
 			}
 		}
 		texte += "|\n";
 	}
-
-	// fin du contenu de la boite
-
-	texte += "+";
-	for (int i = 0; i < largeur; i++) { texte += "-"; }
-	texte += "+";
 	return texte;
 }
 
 std::ostream& operator<<(std::ostream& os, const Boite& bt)
 {
+	// cadre du débute de la boite
+	os << "+";
+	for (int i = 0; i < bt.getLargeur(); ++i) { os << "-"; }
+	os << "+\n";
+	//début du contenu de la boite
 	os << bt.getTexte();
+	// fin du contenu de la boite
+	// cadre de la fin de la boite
+	os << "+";
+	for (int i = 0; i < bt.getLargeur(); ++i) { os << "-"; }
+	os << "+";
+
 	return os;
 };

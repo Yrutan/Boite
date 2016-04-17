@@ -51,7 +51,7 @@ string ComboHorizontal::getTexte() const
 string ComboHorizontal::getTexteBoiteUn() const
 {
 	string texte = "";
-	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); it++)
+	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); ++it)
 	{
 		texte += texte + "\n";
 	}
@@ -60,7 +60,7 @@ string ComboHorizontal::getTexteBoiteUn() const
 string ComboHorizontal::getTexteBoiteDeux() const
 {
 	string texte = "";
-	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); it++)
+	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); ++it)
 	{
 		texte += texte + "\n";
 	}

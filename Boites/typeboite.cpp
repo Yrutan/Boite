@@ -25,14 +25,14 @@ TypeBoite::TypeBoite(string texte)
 
 void TypeBoite::redimensionner()
 {
-	this->hauteur = 0;
+	hauteur = 0;
 	for each (string ligne in this->lignes_boite_un)
 	{
 		if (ligne.length() > getLargeur())
 		{
-			this->largeur = ligne.length();
+			largeur = ligne.length();
 		}
-		this->hauteur++;
+		++hauteur;
 	}
 };
 
@@ -48,7 +48,7 @@ string TypeBoite::getTexteBoiteUn() const
 		texte += ligne;
 		if (ligne.length() < largeur)
 		{
-			for (int i = ligne.length(); i < largeur; i++)
+			for (int i = ligne.length(); i < largeur; ++i)
 			{
 				texte += " ";
 			}
