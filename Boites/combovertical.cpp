@@ -51,6 +51,10 @@ public:
 		if (courant_boite_un != fin_boite_un)
 		{
 			sortie += *courant_boite_un;
+			if (courant_boite_un->length() < largeur_boite_un)
+			{
+				sortie += terminerLigne(largeur_boite_un - courant_boite_un->length());
+			}
 		}
 		else
 		{
@@ -59,6 +63,10 @@ public:
 		if (courant_boite_deux != fin_boite_deux)
 		{
 			sortie += *courant_boite_deux;
+			if (courant_boite_deux->length() < largeur_boite_deux)
+			{
+				sortie += terminerLigne(largeur_boite_deux - courant_boite_deux->length());
+			}
 		}
 		else
 		{
