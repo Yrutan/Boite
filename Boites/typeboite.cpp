@@ -1,25 +1,30 @@
 #include"typeboite.h"
 
-TypeBoite::TypeBoite() { this->hauteur = 0; this->largeur = 0; };
-TypeBoite::TypeBoite(string texte)
+void TypeBoite::extraireLignes(vector<string>& lignes, string texte)
 {
-	this->hauteur = 0;
-	this->largeur = 0;
 	int index;
 	while (texte.length() > 0)
 	{
 		index = texte.find("\n");
 		if (index != string::npos)
 		{
-			lignes_boite_un.push_back(texte.substr(0, index));
+			lignes.push_back(texte.substr(0, index));
 			texte = texte.substr(index + 1);
 		}
 		else
 		{
-			lignes_boite_un.push_back(texte);
+			lignes.push_back(texte);
 			texte.clear();
 		}
 	}
+}
+
+TypeBoite::TypeBoite() { this->hauteur = 0; this->largeur = 0; };
+TypeBoite::TypeBoite(string texte)
+{
+	this->hauteur = 0;
+	this->largeur = 0;
+	extraireLignes(lignes_boite_un, texte);
 	redimensionner();
 };
 

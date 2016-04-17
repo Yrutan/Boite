@@ -101,7 +101,8 @@ ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 {
 	this->hauteur = 0;
 	this->largeur = 0;
-	int index;
+	extraireLignes(lignes_boite_un, boite_un.getTexte());
+	extraireLignes(lignes_boite_deux, boite_deux.getTexte());
 
 	redimensionner();
 };
