@@ -21,22 +21,12 @@ std::unique_ptr<Iterateur_Boite<string>> Boite::enumerateur() const
 
 string Boite::getTexte() const
 {
-	int largeur = getLargeur();
 	string texte = "";
 	unique_ptr<Iterateur_Boite<string>> iterateur = enumerateur();
 	while (iterateur->has_next())
 	{
 		iterateur->next();
-		texte += "|" + iterateur->current();
-		int largeur_ligne = iterateur->current().length();
-		if (largeur_ligne < getLargeur())
-		{
-			for (int i = largeur_ligne; i < getLargeur(); ++i)
-			{
-				texte += " ";
-			}
-		}
-		texte += "|\n";
+		texte += iterateur->current() + '\n';
 	}
 	return texte;
 }

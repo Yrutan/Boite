@@ -31,6 +31,7 @@ TypeBoite::TypeBoite(string texte)
 void TypeBoite::redimensionner()
 {
 	hauteur = 0;
+	largeur = 0;
 	for each (string ligne in this->lignes_boite_un)
 	{
 		if (ligne.length() > getLargeur())
@@ -50,15 +51,7 @@ string TypeBoite::getTexteBoiteUn() const
 	int largeur = getLargeur();
 	for each (string ligne in lignes_boite_un)
 	{
-		texte += ligne;
-		if (ligne.length() < largeur)
-		{
-			for (int i = ligne.length(); i < largeur; ++i)
-			{
-				texte += " ";
-			}
-		}
-		texte += "\n";
+		texte += ligne + "\n";
 	}
 	return texte;
 }
