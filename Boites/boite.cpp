@@ -13,7 +13,6 @@ Boite::Boite(string texte) :boite{ std::move(new UneBoite(texte)) } {};
 
 Boite::Boite(const TypeBoite& boite) :boite{ std::move(boite.cloner()) } { };
 
-
 int Boite::getHauteur() const { return boite->getHauteur(); };
 int Boite::getLargeur() const { return boite->getLargeur(); };
 
@@ -53,48 +52,12 @@ string Boite::toString() const
 
 	texte += "+";
 	for (int i = 0; i < largeur; i++) { texte += "-"; }
-	texte += "+\n";
+	texte += "+";
 	return texte;
 }
 
-const std::ostream& operator<<(std::ostream& os, const Boite& bt)
+std::ostream& operator<<(std::ostream& os, const Boite& bt)
 {
 	os << bt.toString();
 	return os;
 };
-
-/*
-const ostream& operator<<(ostream& os, const Boite& bt)
-{
-	int largeur = bt.getLargeur();
-	os << "+";
-	for (int i = 0; i < largeur; i++) { os << "-"; }
-	os << "+" << endl;
-
-	//contenu de la boite
-
-	unique_ptr<Iterateur_Boite<string>> iterateur = bt.enumerateur();
-
-	while (iterateur->has_next())
-	{
-		iterateur->next();
-		os << "|" << iterateur->current();
-		int largeur_ligne = iterateur->current().length();
-		if (largeur_ligne < bt.getLargeur())
-		{
-			for (int i = largeur_ligne; i < bt.getLargeur(); i++)
-			{
-				os << " ";
-			}
-		}
-		cout << "|" << endl;
-	}
-
-	// fin du contenu de la boite
-
-	os << "+";
-	for (int i = 0; i < largeur; i++) { os << "-"; }
-	os << "+" << endl;
-	return os;
-};
-*/

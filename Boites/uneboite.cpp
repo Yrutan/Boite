@@ -1,7 +1,7 @@
-#include"uneboite.h"
 #include"typeboite.h"
+#include"uneboite.h"
 
-	UneBoite::UneBoite() 
+	UneBoite::UneBoite() :TypeBoite("")
 	{
 
 	};
@@ -15,7 +15,7 @@
 		return unique_ptr<TypeBoite>{new UneBoite};
 	};
 
-	std::unique_ptr<Iterateur_Boite<string>> UneBoite::enumerateur()
+	std::unique_ptr<Iterateur_Boite<string>> UneBoite::enumerateur() const
 	{
 		return std::make_unique<Iterateur_UneBoite>(this->lignes);
 	};

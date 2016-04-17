@@ -12,7 +12,7 @@ class ComboHorizontal : TypeBoite
 
 public:
 	ComboHorizontal();
-	//ComboHorizontal(Boite boite1, Boite boite2) {};
+	ComboHorizontal(Boite boite1, Boite boite2) {};
 
 	unique_ptr<TypeBoite> cloner() const;
 
