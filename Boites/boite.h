@@ -28,9 +28,8 @@ public:
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur() const;
 
-
 	string toString() const;
-	friend const std::ostream& operator<<(std::ostream& os, const Boite& bt);
+	friend std::ostream& operator<<(std::ostream& os, const Boite& bt);
 };
 
 
