@@ -38,7 +38,9 @@ ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 	{
 		lignes_boite_deux.push_back(ligne);
 	}
-	redimensionner();
+	//hauteur = boite_duhaut.hauteur + boite_dubas.hauteur;
+	// largeur = largest;
+	this->redimensionner();
 };
 
 unique_ptr<TypeBoite> ComboVertical::cloner() const
@@ -95,6 +97,7 @@ void ComboVertical::redimensionner()
 const vector<string> ComboVertical::getLignes() const
 {
 	vector<string> lignes;
+	// peut-être comme horizontal ? -
 	lignes.insert(lignes.end(), lignes_boite_un.begin(), lignes_boite_un.end());
 	lignes.push_back(std::string(largeur, '-'));
 	lignes.insert(lignes.end(), lignes_boite_deux.begin(), lignes_boite_deux.end());
