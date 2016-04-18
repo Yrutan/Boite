@@ -10,6 +10,9 @@ Boite::Boite(string texte) :boite{ std::move(new UneBoite(texte)) } {};
 
 Boite::Boite(const ComboVertical& cv) :boite{ std::move(cv.cloner()) } {};
 
+Boite::Boite(const ComboHorizontal& ch) :boite{ std::move(ch.cloner()) } {};
+
+
 int Boite::getHauteur() const { return boite->getHauteur(); };
 int Boite::getLargeur() const { return boite->getLargeur(); };
 
@@ -46,14 +49,19 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 	{
 		ligne.clear();
 		iterateur->next();
-		ligne += '|' + iterateur->current();
-		int largeur_ligne = iterateur->current().length();
-		if (largeur_ligne < largeur)
+		ligne += '|';
+		if (iterateur->current() != "\n")
 		{
-			for (int i = largeur_ligne; i < largeur; ++i)
+			ligne += iterateur->current();
+			int largeur_ligne = iterateur->current().length();
+			if (largeur_ligne < largeur)
 			{
-				ligne += ' ';
+				ligne += std::string(largeur - largeur_ligne, ' ');
 			}
+		}
+		else
+		{
+			ligne += std::string(largeur, '-');
 		}
 		ligne += '|';
 		os << ligne << endl;;

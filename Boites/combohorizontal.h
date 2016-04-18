@@ -10,11 +10,17 @@ class ComboHorizontal : TypeBoite
 {
 protected:
 	std::vector<string> lignes_boite_deux;
+
+	int largeur_boite_un;
+	int largeur_boite_deux;
+
 public:
-	ComboHorizontal(Boite boite1, Boite boite2);
+	ComboHorizontal(const Boite & boite_un, const Boite & boite_deux);
 
 	unique_ptr<TypeBoite> cloner() const;
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur() const;
+
+	void redimensionner();
 
 	string getTexte() const;
 	string getTexteBoiteUn() const;

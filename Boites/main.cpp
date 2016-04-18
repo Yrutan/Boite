@@ -19,9 +19,9 @@ multiligne)";
 	Boite b1{ aut_texte };
 	cout << b0 << endl << b1 << endl;
 	ComboVertical cv{ b0, b1 };
-	cout << Boite{ cv } << endl;/*
-	ComboHorizontal ch{ b0, b1 };/*
-	cout << Boite{ ch } << endl;/*
+	cout << Boite{ cv } << endl;
+	ComboHorizontal ch{ b0, b1 };
+	cout << Boite{ ch } << endl;
 	ComboVertical cvplus{ Boite{ cv }, Boite{ ch } };
 	cout << Boite{ cvplus } << endl;/*
 	ComboHorizontal chplus{ Boite{ cv }, Boite{ ch } };

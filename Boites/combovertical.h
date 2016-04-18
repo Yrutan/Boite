@@ -17,6 +17,8 @@ public:
 	unique_ptr<TypeBoite> cloner() const;
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur()const;
+	
+	void redimensionner();
 
 	string getTexte() const;
 	string getTexteBoiteUn() const;

@@ -6,7 +6,6 @@
 struct Iterateur_ComboHorizontal : Iterateur_Boite<string>
 {
 private:
-	std::vector<string> liste;
 	std::vector<string> boite_un;
 	std::vector<string> boite_deux;
 	std::vector<string>::const_iterator courant_boite_un, fin_boite_un,
@@ -14,30 +13,19 @@ private:
 	bool debut;
 	int largeur_boite_un, largeur_boite_deux, hauteur_boite;
 public:
-	Iterateur_ComboHorizontal(const std::vector<string> &liste)
-		:liste{ liste }, debut{ true }, largeur_boite_un{ 0 },
-		largeur_boite_deux{ 0 }, hauteur_boite{ 0 }
+	Iterateur_ComboHorizontal(const std::vector<string> &liste_un, const std::vector<string> &liste_deux)
+		: debut{ true }, largeur_boite_un{ 0 }, largeur_boite_deux{0}, hauteur_boite {0}
 	{
-		bool separateur = false;
-		auto it = liste.begin();
-		for (; it != liste.end() && !separateur; ++it, ++hauteur_boite)
+		for (auto it = liste_un.begin(); it != liste_un.end(); ++it, ++hauteur_boite)
 		{
-			if (*it != "\n\n")
+			boite_un.push_back(*it);
+			if (it->length() > largeur_boite_un)
 			{
-				boite_un.push_back(*it);
-				if (it->length() > largeur_boite_un)
-				{
-					largeur_boite_un = it->length();
-				}
-			}
-			else
-			{
-				separateur = true;
-				//++it; // pour passer par-dessus la ligne qui sépare les deux boites.
+				largeur_boite_un = it->length();
 			}
 		}
 		int hauteur_boite_deux = 0;
-		for (; it != liste.end() && !separateur; ++it, ++hauteur_boite_deux)
+		for (auto it = liste_deux.begin(); it != liste_deux.end(); ++it, ++hauteur_boite_deux)
 		{
 			boite_deux.push_back(*it);
 			if (it->length() > largeur_boite_deux)
@@ -106,11 +94,11 @@ public:
 	{
 		if (!debut)
 		{
-			if (boite_un_has_next())
+			if (boite_un_has_next() || courant_boite_un != fin_boite_un)
 			{
 				++courant_boite_un;
 			}
-			if (boite_deux_has_next())
+			if (boite_deux_has_next() || courant_boite_deux != fin_boite_deux)
 			{
 				++courant_boite_deux;
 			}
@@ -120,9 +108,14 @@ public:
 };
 
 
-ComboHorizontal::ComboHorizontal(Boite boite1, Boite boite2)
+ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deux)
 {
+	this->hauteur = 0;
+	this->largeur = 0;
+	extraireLignes(lignes_boite_un, boite_un.getTexte());
+	extraireLignes(lignes_boite_deux, boite_deux.getTexte());
 
+	redimensionner();
 };
 
 unique_ptr<TypeBoite> ComboHorizontal::cloner() const
@@ -134,21 +127,39 @@ unique_ptr<TypeBoite> ComboHorizontal::cloner() const
 
 std::unique_ptr<Iterateur_Boite<string>> ComboHorizontal::enumerateur() const
 {
-	std::vector<string> texte;
-
-	for each (string ligne in lignes_boite_un)
-	{
-		texte.push_back(ligne);
-	}
-	// les vecteurs contiennent seulement des lignes sans "\n"
-	// "\n\n" est utilisé comme séparateur entre les lignes des deux boites.
-	texte.push_back("\n\n");
-	for each (string ligne in lignes_boite_deux)
-	{
-		texte.push_back(ligne);
-	}
-	return std::make_unique<Iterateur_ComboHorizontal>(texte);
+	return std::make_unique<Iterateur_ComboHorizontal>(lignes_boite_un, lignes_boite_deux);
 };
+
+void ComboHorizontal::redimensionner()
+{
+	hauteur = 0;
+	largeur = 0;
+	largeur_boite_un = 0;
+	largeur_boite_deux = 0;
+	for each (string ligne in this->lignes_boite_un)
+	{
+		if (ligne.length() > largeur_boite_un)
+		{
+			largeur_boite_un = ligne.length();
+		}
+		++hauteur;
+	}
+	int hauteur_boite_deux = 0; 
+	for each (string ligne in this->lignes_boite_deux)
+	{
+		if (ligne.length() > largeur_boite_deux)
+		{
+			largeur_boite_deux = ligne.length();
+		}
+		++hauteur_boite_deux;
+	}
+	// compare laquelle des deux boites a la plus grande hauteur
+	if (hauteur_boite_deux > hauteur)
+	{
+		hauteur = hauteur_boite_deux;
+	}
+	largeur = largeur_boite_un + largeur_boite_deux + 1;// +1 pour la séparation entre les deux boites
+}
 
 string ComboHorizontal::getTexte() const
 {

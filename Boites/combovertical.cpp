@@ -52,13 +52,40 @@ std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 	{
 		texte.push_back(ligne);
 	}
-	texte.push_back(std::string(getLargeur(), '-'));
+	texte.push_back("\n");
 	for each (string ligne in lignes_boite_deux)
 	{
 		texte.push_back(ligne);
 	}
 	return std::make_unique<Iterateur_ComboVertical>(texte);
 };
+
+void ComboVertical::redimensionner()
+{
+	hauteur = 0;
+	largeur = 0;
+	for each (string ligne in this->lignes_boite_un)
+	{
+		if (ligne.length() > getLargeur())
+		{
+			largeur = ligne.length();
+		}
+		++hauteur;
+	}
+	int largeur_boite_deux = 0;
+	for each (string ligne in this->lignes_boite_deux)
+	{
+		if (ligne.length() > getLargeur())
+		{
+			largeur = ligne.length();
+		}
+		++hauteur;
+	}
+	if (largeur_boite_deux > largeur)
+	{
+		largeur = largeur_boite_deux;
+	}
+}
 
 string ComboVertical::getTexte() const
 {

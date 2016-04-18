@@ -21,7 +21,7 @@ public:
 	Boite();
 	Boite(string texte);
 	Boite(const ComboVertical& cv);
-	Boite(const TypeBoite& boite);
+	Boite(const ComboHorizontal& ch);
 
 	int getHauteur() const;
 	int getLargeur() const;
