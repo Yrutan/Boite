@@ -23,7 +23,7 @@ multiligne)";
 	ComboHorizontal ch{ b0, b1 };
 	cout << Boite{ ch } << endl;
 	ComboVertical cvplus{ Boite{ cv }, Boite{ ch } };
-	cout << Boite{ cvplus } << endl;/*
+	cout << Boite{ cvplus } << endl;
 	ComboHorizontal chplus{ Boite{ cv }, Boite{ ch } };
 	cout << Boite{ chplus } << endl;/*
 	ComboVertical cvv{ Boite{ chplus }, Boite{ "coucou" } };

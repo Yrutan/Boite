@@ -121,7 +121,7 @@ ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deu
 unique_ptr<TypeBoite> ComboHorizontal::cloner() const
 {
 	return unique_ptr<TypeBoite>{
-		new ComboHorizontal( Boite( getTexteBoiteUn() ), Boite( getTexteBoiteDeux() ) )
+		new ComboHorizontal( Boite(lignes_boite_un), Boite(lignes_boite_deux) )
 	};
 }
 

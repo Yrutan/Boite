@@ -20,6 +20,7 @@ class UneBoite : public TypeBoite
 public:
 	UneBoite();
 	UneBoite(string texte);
+	UneBoite(const vector<string>& lignes);
 
 	unique_ptr<TypeBoite> cloner() const;
 

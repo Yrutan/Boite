@@ -20,6 +20,7 @@ private:
 public:
 	Boite();
 	Boite(string texte);
+	Boite(const vector<string>& lignes);
 	Boite(const ComboVertical& cv);
 	Boite(const ComboHorizontal& ch);
 
@@ -27,7 +28,7 @@ public:
 	int getLargeur() const;
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur() const;
-
+	const vector<string> Boite::getLignes() const;
 	string getTexte() const;
 	friend std::ostream& operator<<(std::ostream& os, const Boite& bt);
 };

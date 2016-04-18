@@ -27,6 +27,13 @@ TypeBoite::TypeBoite(string texte)
 	extraireLignes(lignes_boite_un, texte);
 	redimensionner();
 };
+TypeBoite::TypeBoite(const vector<string>& lignes)
+{
+	for each (string ligne in lignes)
+	{
+		lignes_boite_un.push_back(ligne);
+	}
+}
 
 void TypeBoite::redimensionner()
 {
@@ -55,7 +62,10 @@ string TypeBoite::getTexteBoiteUn() const
 	}
 	return texte;
 }
-
+const vector<string> TypeBoite::getLignes() const
+{
+	return lignes_boite_un;
+}
 string TypeBoite::getTexte() const
 {
 	return getTexteBoiteUn();

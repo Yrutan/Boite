@@ -30,6 +30,10 @@ ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 {
 	this->hauteur = 0;
 	this->largeur = 0;
+	for each (string ligne in boite_un.getLignes())
+	{
+
+	}
 	extraireLignes(lignes_boite_un, boite_un.getTexte());
 	extraireLignes(lignes_boite_deux, boite_deux.getTexte());
 
@@ -39,8 +43,8 @@ ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 unique_ptr<TypeBoite> ComboVertical::cloner() const
 {
 	return unique_ptr<TypeBoite>{new ComboVertical(
-		Boite(this->getTexteBoiteUn()), 
-		Boite(this->getTexteBoiteDeux())
+		Boite(lignes_boite_un), 
+		Boite(lignes_boite_deux)
 		)};
 };
 
@@ -85,6 +89,15 @@ void ComboVertical::redimensionner()
 	{
 		largeur = largeur_boite_deux;
 	}
+}
+
+const vector<string> ComboVertical::getLignes() const
+{
+	vector<string> lignes;
+	lignes.insert(lignes.end(), lignes_boite_un.begin(), lignes_boite_un.end());
+	lignes.push_back("\n");
+	lignes.insert(lignes.end(), lignes_boite_deux.begin(), lignes_boite_deux.end());
+	return lignes;
 }
 
 string ComboVertical::getTexte() const

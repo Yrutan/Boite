@@ -7,6 +7,7 @@
 Boite::Boite() :boite{ std::move(new UneBoite()) } {};
 
 Boite::Boite(string texte) :boite{ std::move(new UneBoite(texte)) } {};
+Boite::Boite(const vector<string>& lignes) :boite{ std::move(new UneBoite(lignes)) } {};
 
 Boite::Boite(const ComboVertical& cv) :boite{ std::move(cv.cloner()) } {};
 
@@ -21,7 +22,10 @@ std::unique_ptr<Iterateur_Boite<string>> Boite::enumerateur() const
 	return boite->enumerateur();
 };
 
-
+const vector<string> Boite::getLignes() const
+{
+	return boite->getLignes();
+}
 string Boite::getTexte() const
 {
 	string texte = "";

@@ -31,6 +31,7 @@ protected:
 public:
 	TypeBoite();
 	TypeBoite(string texte);
+	TypeBoite(const vector<string>& lignes);
 
 	virtual unique_ptr<TypeBoite> cloner() const = 0;
 
@@ -40,6 +41,7 @@ public:
 
 	int getHauteur() const;
 	int getLargeur() const;
+	const vector<string> getLignes() const;
 	string getTexte() const;
 	string getTexteBoiteUn() const;
 };
