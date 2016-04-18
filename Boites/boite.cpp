@@ -36,10 +36,11 @@ string Boite::getTexte() const
 
 std::ostream& operator<<(std::ostream& os, const Boite& bt)
 {
-	// cadre du débute de la boite
+	// cadre du début de la boite
 	os << '+';
 	for (int i = 0; i < bt.getLargeur(); ++i) { os << '-'; }
 	os << '+' << endl;
+	//
 	//début du contenu de la boite
 	int largeur = bt.getLargeur();
 	int hauteur = bt.getHauteur();
@@ -49,8 +50,8 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 	{
 		ligne.clear();
 		iterateur->next();
-		ligne += '|';
-		if (iterateur->current() != "\n")
+		ligne += '|';// nouvelle ligne
+		if (iterateur->current() != "\n" && iterateur->current() != "")
 		{
 			ligne += iterateur->current();
 			int largeur_ligne = iterateur->current().length();
@@ -63,14 +64,14 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 		{
 			ligne += std::string(largeur, '-');
 		}
-		ligne += '|';
-		os << ligne << endl;;
+		ligne += '|';// fin de la ligne et bordure de la boite
+		os << ligne << endl; // saut de ligne, fin de la ligne
 	}
 	// fin du contenu de la boite
 	// cadre de la fin de la boite
 	os << '+';
 	for (int i = 0; i < bt.getLargeur(); ++i) { os << '-'; }
 	os << '+';
-
+	//
 	return os;
 };

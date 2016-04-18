@@ -25,7 +25,7 @@ public:
 	void next() { if (!debut) { ++courant; }debut = {}; };
 };
 
-ComboVertical::ComboVertical() {};
+ComboVertical::ComboVertical() :texte_origine_boite_deux{""}, TypeBoite("") {};
 ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 {
 	this->hauteur = 0;
@@ -52,7 +52,7 @@ std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 	{
 		texte.push_back(ligne);
 	}
-	texte.push_back("\n");
+	texte.push_back("\n"); // envoi un flag qu'une bordure horizontale s'affiche
 	for each (string ligne in lignes_boite_deux)
 	{
 		texte.push_back(ligne);
@@ -94,19 +94,9 @@ string ComboVertical::getTexte() const
 
 string ComboVertical::getTexteBoiteUn() const
 {
-	string texte = "";
-	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); ++it)
-	{
-		texte += *it + "\n";
-	}
-	return texte;
+	return texte_origine_boite_un;
 }
 string ComboVertical::getTexteBoiteDeux() const
 {
-	string texte = "";
-	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); ++it)
-	{
-		texte += *it + "\n";
-	}
-	return texte;
+	return texte_origine_boite_deux;
 }
