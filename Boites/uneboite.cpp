@@ -1,5 +1,7 @@
 #include"typeboite.h"
+#include"boite.h"
 #include"uneboite.h"
+
 
 UneBoite::UneBoite() :TypeBoite("") {/*fait*/ };
 UneBoite::UneBoite(string texte) : TypeBoite(texte){/*fait*/};
@@ -14,3 +16,8 @@ std::unique_ptr<Iterateur_Boite<string>> UneBoite::enumerateur() const
 {
 	return std::make_unique<Iterateur_UneBoite>(lignes_boite_un);
 };
+
+const vector<string> UneBoite::getLignes() const
+{
+	return lignes_boite_un;
+}

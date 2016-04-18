@@ -14,6 +14,9 @@ protected:
 	int largeur_boite_un;
 	int largeur_boite_deux;
 
+	Boite boite_gauche;
+	Boite boite_droite;
+
 public:
 	ComboHorizontal(const Boite & boite_un, const Boite & boite_deux);
 
@@ -22,11 +25,7 @@ public:
 
 	void redimensionner();
 
-	string getTexte() const;
-	string getTexteBoiteUn() const;
-	string getTexteBoiteDeux() const;
-
-
+	const vector<string> ComboHorizontal::getLignes() const;
 };
 
 

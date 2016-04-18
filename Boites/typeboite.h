@@ -18,14 +18,12 @@ public:
 	virtual ~Iterateur_Boite() = default;
 };
 
-
 class TypeBoite
 {
 protected:
 	int hauteur;
 	int largeur;
 	std::vector<string> lignes_boite_un;
-
 	void TypeBoite::extraireLignes(vector<string>& lignes, string texte);
 
 public:
@@ -41,9 +39,7 @@ public:
 
 	int getHauteur() const;
 	int getLargeur() const;
-	const vector<string> getLignes() const;
-	string getTexte() const;
-	string getTexteBoiteUn() const;
+	virtual const vector<string> getLignes() const = 0;
 };
 
 #endif

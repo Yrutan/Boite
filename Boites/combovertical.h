@@ -10,6 +10,10 @@ class ComboVertical : TypeBoite
 {
 protected:
 	std::vector<string> lignes_boite_deux;
+
+	Boite boite_duhaut;
+	Boite boite_dubas;
+
 public:
 	ComboVertical();
 	ComboVertical(const Boite & boite_un, const Boite & boite_deux);
@@ -20,10 +24,6 @@ public:
 	
 	void redimensionner();
 	const vector<string> ComboVertical::getLignes() const;
-	string getTexte() const;
-	string getTexteBoiteUn() const;
-	string getTexteBoiteDeux() const;
-
 };
 
 

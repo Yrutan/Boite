@@ -29,7 +29,6 @@ public:
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur() const;
 	const vector<string> Boite::getLignes() const;
-	string getTexte() const;
 	friend std::ostream& operator<<(std::ostream& os, const Boite& bt);
 };
 

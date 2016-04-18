@@ -26,17 +26,6 @@ const vector<string> Boite::getLignes() const
 {
 	return boite->getLignes();
 }
-string Boite::getTexte() const
-{
-	string texte = "";
-	unique_ptr<Iterateur_Boite<string>> iterateur = enumerateur();
-	while (iterateur->has_next())
-	{
-		iterateur->next();
-		texte += iterateur->current() + '\n';
-	}
-	return texte;
-}
 
 std::ostream& operator<<(std::ostream& os, const Boite& bt)
 {
@@ -54,18 +43,11 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 		ligne.clear();
 		iterateur->next();
 		ligne += '|';
-		if (iterateur->current() != "\n")
+		ligne += iterateur->current();
+		int largeur_ligne = iterateur->current().length();
+		if (largeur_ligne < largeur)
 		{
-			ligne += iterateur->current();
-			int largeur_ligne = iterateur->current().length();
-			if (largeur_ligne < largeur)
-			{
-				ligne += std::string(largeur - largeur_ligne, ' ');
-			}
-		}
-		else
-		{
-			ligne += std::string(largeur, '-');
+			ligne += std::string(largeur - largeur_ligne, ' ');
 		}
 		ligne += '|';
 		os << ligne << endl;;

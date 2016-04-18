@@ -2,6 +2,7 @@
 #define UNEBOITE_H
 
 class TypeBoite;
+class Boite;
 
 struct Iterateur_UneBoite : Iterateur_Boite<string>
 {
@@ -17,6 +18,7 @@ public:
 
 class UneBoite : public TypeBoite
 {
+	std::unique_ptr<Boite> boite;
 public:
 	UneBoite();
 	UneBoite(string texte);
@@ -26,8 +28,7 @@ public:
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur()const;
 
-	//string getTexte() const; ok utiliser celui de la classe de basse
-
+	const vector<string> getLignes() const;
 };
 
 

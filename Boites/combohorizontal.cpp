@@ -112,9 +112,14 @@ ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deu
 {
 	this->hauteur = 0;
 	this->largeur = 0;
-	extraireLignes(lignes_boite_un, boite_un.getTexte());
-	extraireLignes(lignes_boite_deux, boite_deux.getTexte());
-
+	for each (string ligne in boite_un.getLignes())
+	{
+		lignes_boite_un.push_back(ligne);
+	}
+	for each (string ligne in boite_deux.getLignes())
+	{
+		lignes_boite_deux.push_back(ligne);
+	}
 	redimensionner();
 };
 
@@ -161,26 +166,16 @@ void ComboHorizontal::redimensionner()
 	largeur = largeur_boite_un + largeur_boite_deux + 1;// +1 pour la séparation entre les deux boites
 }
 
-string ComboHorizontal::getTexte() const
+const vector<string> ComboHorizontal::getLignes() const
 {
-	return "";
-}
+	vector<string> lignes;
 
-string ComboHorizontal::getTexteBoiteUn() const
-{
-	string texte = "";
-	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); ++it)
+	unique_ptr<Iterateur_Boite<string>> iterateur = enumerateur();
+
+	while (iterateur->has_next())
 	{
-		texte += *it + "\n";
+		iterateur->next();
+		lignes.push_back(iterateur->current());
 	}
-	return texte;
-}
-string ComboHorizontal::getTexteBoiteDeux() const
-{
-	string texte = "";
-	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); ++it)
-	{
-		texte += *it + "\n";
-	}
-	return texte;
+	return lignes;
 }

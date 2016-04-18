@@ -32,11 +32,12 @@ ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 	this->largeur = 0;
 	for each (string ligne in boite_un.getLignes())
 	{
-
+		lignes_boite_un.push_back(ligne);
 	}
-	extraireLignes(lignes_boite_un, boite_un.getTexte());
-	extraireLignes(lignes_boite_deux, boite_deux.getTexte());
-
+	for each (string ligne in boite_deux.getLignes())
+	{
+		lignes_boite_deux.push_back(ligne);
+	}
 	redimensionner();
 };
 
@@ -56,7 +57,7 @@ std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 	{
 		texte.push_back(ligne);
 	}
-	texte.push_back("\n");
+	texte.push_back(std::string(largeur, '-'));
 	for each (string ligne in lignes_boite_deux)
 	{
 		texte.push_back(ligne);
@@ -95,31 +96,7 @@ const vector<string> ComboVertical::getLignes() const
 {
 	vector<string> lignes;
 	lignes.insert(lignes.end(), lignes_boite_un.begin(), lignes_boite_un.end());
-	lignes.push_back("\n");
+	lignes.push_back(std::string(largeur, '-'));
 	lignes.insert(lignes.end(), lignes_boite_deux.begin(), lignes_boite_deux.end());
 	return lignes;
-}
-
-string ComboVertical::getTexte() const
-{
-	return getTexteBoiteUn() + getTexteBoiteDeux();
-}
-
-string ComboVertical::getTexteBoiteUn() const
-{
-	string texte = "";
-	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); ++it)
-	{
-		texte += *it + "\n";
-	}
-	return texte;
-}
-string ComboVertical::getTexteBoiteDeux() const
-{
-	string texte = "";
-	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); ++it)
-	{
-		texte += *it + "\n";
-	}
-	return texte;
 }
