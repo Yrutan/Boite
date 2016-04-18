@@ -112,10 +112,7 @@ ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deu
 {
 	this->hauteur = 0;
 	this->largeur = 0;
-	texte_origine_boite_un = boite_un.getTexte();
 	extraireLignes(lignes_boite_un, boite_un.getTexte());
-
-	texte_origine_boite_deux = boite_deux.getTexte();
 	extraireLignes(lignes_boite_deux, boite_deux.getTexte());
 
 	redimensionner();
@@ -171,9 +168,19 @@ string ComboHorizontal::getTexte() const
 
 string ComboHorizontal::getTexteBoiteUn() const
 {
-	return texte_origine_boite_un;
+	string texte = "";
+	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); ++it)
+	{
+		texte += *it + "\n";
+	}
+	return texte;
 }
 string ComboHorizontal::getTexteBoiteDeux() const
 {
-	return texte_origine_boite_deux;
+	string texte = "";
+	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); ++it)
+	{
+		texte += *it + "\n";
+	}
+	return texte;
 }

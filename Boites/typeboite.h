@@ -24,7 +24,6 @@ class TypeBoite
 protected:
 	int hauteur;
 	int largeur;
-	string texte_origine_boite_un;
 	std::vector<string> lignes_boite_un;
 
 	void TypeBoite::extraireLignes(vector<string>& lignes, string texte);

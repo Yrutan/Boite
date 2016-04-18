@@ -9,7 +9,6 @@
 class ComboVertical : TypeBoite
 {
 protected:
-	string texte_origine_boite_deux;
 	std::vector<string> lignes_boite_deux;
 public:
 	ComboVertical();

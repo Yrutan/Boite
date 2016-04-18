@@ -19,8 +19,8 @@ void TypeBoite::extraireLignes(vector<string>& lignes, string texte)
 	}
 }
 
-TypeBoite::TypeBoite() :texte_origine_boite_un{ "" }{ redimensionner(); };
-TypeBoite::TypeBoite(string texte) :texte_origine_boite_un{texte}
+TypeBoite::TypeBoite() { this->hauteur = 0; this->largeur = 0; };
+TypeBoite::TypeBoite(string texte)
 {
 	this->hauteur = 0;
 	this->largeur = 0;
@@ -47,10 +47,16 @@ int TypeBoite::getLargeur() const { return this->largeur; }
 
 string TypeBoite::getTexteBoiteUn() const 
 {
-	return texte_origine_boite_un;
+	string texte = "";
+	int largeur = getLargeur();
+	for each (string ligne in lignes_boite_un)
+	{
+		texte += ligne + "\n";
+	}
+	return texte;
 }
 
 string TypeBoite::getTexte() const
 {
-	return texte_origine_boite_un;
+	return getTexteBoiteUn();
 }
