@@ -13,6 +13,10 @@ Boite::Boite(const ComboVertical& cv) :boite{ std::move(cv.cloner()) } {};
 
 Boite::Boite(const ComboHorizontal& ch) :boite{ std::move(ch.cloner()) } {};
 
+unique_ptr<TypeBoite> Boite::cloner() const
+{
+	return boite->cloner();
+};
 
 int Boite::getHauteur() const { return boite->getHauteur(); };
 int Boite::getLargeur() const { return boite->getLargeur(); };
@@ -44,11 +48,13 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 		iterateur->next();
 		ligne += '|';
 		ligne += iterateur->current();
+		/*
 		int largeur_ligne = iterateur->current().length();
 		if (largeur_ligne < largeur)
 		{
 			ligne += std::string(largeur - largeur_ligne, ' ');
 		}
+		*/
 		ligne += '|';
 		os << ligne << endl;;
 	}

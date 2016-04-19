@@ -11,8 +11,8 @@ class ComboVertical : TypeBoite
 protected:
 	std::vector<string> lignes_boite_deux;
 
-	Boite boite_duhaut;
-	Boite boite_dubas;
+	std::unique_ptr<Boite> boite_duhaut;
+	std::unique_ptr<Boite> boite_dubas;
 
 public:
 	ComboVertical();

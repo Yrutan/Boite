@@ -6,41 +6,20 @@
 struct Iterateur_ComboHorizontal : Iterateur_Boite<string>
 {
 private:
-	std::vector<string> boite_un;
-	std::vector<string> boite_deux;
-	std::vector<string>::const_iterator courant_boite_un, fin_boite_un,
-		courant_boite_deux, fin_boite_deux;
+	unique_ptr<Iterateur_Boite<string>> boite_gauche, boite_droite;
 	bool debut;
-	int largeur_boite_un, largeur_boite_deux, hauteur_boite;
+	int largeur_boite_gauche, largeur_boite_droite, hauteur_boite;
 public:
-	Iterateur_ComboHorizontal(const std::vector<string> &liste_un, const std::vector<string> &liste_deux)
-		: debut{ true }, largeur_boite_un{ 0 }, largeur_boite_deux{0}, hauteur_boite {0}
+	Iterateur_ComboHorizontal(const std::unique_ptr<TypeBoite>& boite_gauche, const std::unique_ptr<TypeBoite>& boite_droite)
+		: debut{ true }, largeur_boite_gauche{ boite_gauche->getLargeur() }, largeur_boite_droite{ boite_droite->getLargeur() }, hauteur_boite {0}
 	{
-		for (auto it = liste_un.begin(); it != liste_un.end(); ++it, ++hauteur_boite)
+		hauteur_boite = boite_gauche->getHauteur();
+		if (hauteur_boite < boite_droite->getHauteur())
 		{
-			boite_un.push_back(*it);
-			if (it->length() > largeur_boite_un)
-			{
-				largeur_boite_un = it->length();
-			}
+			hauteur_boite = boite_droite->getHauteur();
 		}
-		int hauteur_boite_deux = 0;
-		for (auto it = liste_deux.begin(); it != liste_deux.end(); ++it, ++hauteur_boite_deux)
-		{
-			boite_deux.push_back(*it);
-			if (it->length() > largeur_boite_deux)
-			{
-				largeur_boite_deux = it->length();
-			}
-		}
-		if (hauteur_boite_deux > hauteur_boite)
-		{
-			hauteur_boite = hauteur_boite_deux;
-		}
-		courant_boite_un = boite_un.begin();
-		fin_boite_un = boite_un.end();
-		courant_boite_deux = boite_deux.begin();
-		fin_boite_deux = boite_deux.end();
+		this->boite_gauche  = std::move(boite_gauche->enumerateur());
+		this->boite_droite = std::move(boite_droite->enumerateur());
 	};
 	string terminerLigne(const int& nb_espace_manquant) const
 	{
@@ -50,57 +29,40 @@ public:
 	string current() const
 	{
 		string sortie = "";
-
-		if (courant_boite_un != fin_boite_un)
+		if (boite_gauche->has_next())
 		{
-			sortie += *courant_boite_un;
-			if (courant_boite_un->length() < largeur_boite_un)
-			{
-				sortie += terminerLigne(largeur_boite_un - courant_boite_un->length());
-			}
+			sortie += boite_gauche->current();
 		}
 		else
 		{
-			sortie += terminerLigne(largeur_boite_un);
+			sortie += std::string(largeur_boite_gauche,' ');
 		}
 		sortie += "|";
-		if (courant_boite_deux != fin_boite_deux)
+		if (boite_droite->has_next())
 		{
-			sortie += *courant_boite_deux;
-			if (courant_boite_deux->length() < largeur_boite_deux)
-			{
-				sortie += terminerLigne(largeur_boite_deux - courant_boite_deux->length());
-			}
+			sortie += boite_droite->current();
 		}
 		else
 		{
-			sortie += terminerLigne(largeur_boite_deux);
+			sortie += std::string(largeur_boite_droite, ' ');
 		}
 		return sortie;
 	};
 	bool has_next() const
 	{
-		return boite_un_has_next() || boite_deux_has_next();
-	};
-	bool boite_un_has_next() const
-	{
-		return courant_boite_un != fin_boite_un && std::next(courant_boite_un) != fin_boite_un;
-	};
-	bool boite_deux_has_next() const
-	{
-		return courant_boite_deux != fin_boite_deux && std::next(courant_boite_deux) != fin_boite_deux;
+		return boite_gauche->has_next() || boite_droite->has_next();
 	};
 	void next()
 	{
 		if (!debut)
 		{
-			if (boite_un_has_next() || courant_boite_un != fin_boite_un)
+			if (boite_gauche->has_next())
 			{
-				++courant_boite_un;
+				boite_gauche->next();
 			}
-			if (boite_deux_has_next() || courant_boite_deux != fin_boite_deux)
+			if (boite_droite->has_next())
 			{
-				++courant_boite_deux;
+				boite_droite->next();
 			}
 		}
 		debut = {};
@@ -108,10 +70,11 @@ public:
 };
 
 
-ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deux)
+ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deux) 
 {
-	this->hauteur = 0;
-	this->largeur = 0;
+	boite_gauche = boite_un.cloner();
+	boite_droite = boite_deux.cloner();
+
 	for each (string ligne in boite_un.getLignes())
 	{
 		lignes_boite_un.push_back(ligne);
@@ -122,17 +85,25 @@ ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deu
 	}
 	redimensionner();
 };
+ComboHorizontal::ComboHorizontal(std::unique_ptr<TypeBoite>& boite_un, 
+	std::unique_ptr<TypeBoite>& boite_deux)
+{
+	boite_gauche = std::move(boite_un);
+	boite_droite = std::move(boite_deux);
+
+	redimensionner();
+};
 
 unique_ptr<TypeBoite> ComboHorizontal::cloner() const
 {
 	return unique_ptr<TypeBoite>{
-		new ComboHorizontal( Boite(lignes_boite_un), Boite(lignes_boite_deux) )
+		new ComboHorizontal(boite_gauche->cloner(), boite_droite->cloner())
 	};
 }
 
 std::unique_ptr<Iterateur_Boite<string>> ComboHorizontal::enumerateur() const
 {
-	return std::make_unique<Iterateur_ComboHorizontal>(lignes_boite_un, lignes_boite_deux);
+	return std::make_unique<Iterateur_ComboHorizontal>(boite_gauche, boite_droite);
 };
 
 void ComboHorizontal::redimensionner()

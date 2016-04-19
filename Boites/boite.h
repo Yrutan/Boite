@@ -24,6 +24,8 @@ public:
 	Boite(const ComboVertical& cv);
 	Boite(const ComboHorizontal& ch);
 
+	unique_ptr<TypeBoite> cloner() const;
+
 	int getHauteur() const;
 	int getLargeur() const;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include"typeboite.h"
+#include"uneboite.h"
 #include"boite.h"
 #include"combovertical.h"
 
@@ -25,11 +26,14 @@ public:
 	void next() { if (!debut) { ++courant; }debut = {}; };
 };
 
-ComboVertical::ComboVertical() {};
+ComboVertical::ComboVertical() 
+	:boite_duhaut{ std::move(new Boite())},
+	boite_dubas{ std::move(new Boite()) } {
+	redimensionner();
+};
 ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 {
-	this->hauteur = 0;
-	this->largeur = 0;
+	//boite_duhaut = boite_un;
 	for each (string ligne in boite_un.getLignes())
 	{
 		lignes_boite_un.push_back(ligne);
@@ -53,18 +57,7 @@ unique_ptr<TypeBoite> ComboVertical::cloner() const
 
 std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 {
-	std::vector<string> texte;
-
-	for each (string ligne in lignes_boite_un)
-	{
-		texte.push_back(ligne);
-	}
-	texte.push_back(std::string(largeur, '-'));
-	for each (string ligne in lignes_boite_deux)
-	{
-		texte.push_back(ligne);
-	}
-	return std::make_unique<Iterateur_ComboVertical>(texte);
+	return std::make_unique<Iterateur_ComboHorizontal>(boite_duhaut, boite_dubas);
 };
 
 void ComboVertical::redimensionner()
