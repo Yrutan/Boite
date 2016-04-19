@@ -7,12 +7,35 @@ class Boite;
 struct Iterateur_UneBoite : Iterateur_Boite<string>
 {
 private:
+	std::vector<string> lignes;
 	std::vector<string>::const_iterator courant, fin;
 	bool debut;
+	int largeur;
 public:
 	Iterateur_UneBoite(const vector<string>& lignes) 
-		: courant{ lignes.begin() }, fin{ lignes.end() }, debut{ true } {};
-	string current() const { return *courant; };
+		: courant{ lignes.begin() }, fin{ lignes.end() }, debut{ true } 
+	{
+		largeur = 0;
+		for each (string ligne in lignes)
+		{
+			this->lignes.push_back(ligne);
+			if (ligne.length() > largeur)
+			{
+				largeur = ligne.length();
+			}
+		}
+		courant = this->lignes.begin();
+		fin = this->lignes.end();
+		
+		
+	};
+	string current() const 
+	{ 
+		string sortie = "";
+		sortie += *courant;
+		sortie += std::string(largeur - sortie.length(), ' ');
+		return sortie;
+	};
 	bool has_next() const { return courant != fin && std::next(courant) != fin; };
 	void next() { if (!debut) { ++courant; }debut = {}; };
 };
@@ -23,7 +46,6 @@ public:
 	UneBoite();
 	UneBoite(string texte);
 	UneBoite(const vector<string>& lignes);
-	UneBoite(std::unique_ptr<TypeBoite>& boite);
 
 	unique_ptr<TypeBoite> cloner() const;
 

@@ -9,8 +9,6 @@
 class ComboVertical : TypeBoite
 {
 protected:
-	std::vector<string> lignes_boite_deux;
-
 	std::unique_ptr<TypeBoite> boite_duhaut;
 	std::unique_ptr<TypeBoite> boite_dubas;
 

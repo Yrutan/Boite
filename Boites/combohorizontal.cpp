@@ -12,7 +12,7 @@ private:
 	int largeur_boite_gauche, largeur_boite_droite, hauteur_boite;
 public:
 	Iterateur_ComboHorizontal(const std::unique_ptr<TypeBoite>& boite_gauche, const std::unique_ptr<TypeBoite>& boite_droite)
-		: debut{ true }, largeur_boite_gauche{ boite_gauche->getLargeur() }, largeur_boite_droite{ boite_droite->getLargeur() }, hauteur_boite {0}
+		: debut{ true }, largeur_boite_gauche{ boite_gauche->getLargeur() }, largeur_boite_droite{ boite_droite->getLargeur() }
 	{
 		hauteur_boite = boite_gauche->getHauteur();
 		if (hauteur_boite < boite_droite->getHauteur())
@@ -69,7 +69,7 @@ public:
 		debut = {};
 	};
 };
-ComboHorizontal::ComboHorizontal() :boite_gauche{UneBoite().cloner()}, boite_droite{UneBoite().cloner()} {};
+ComboHorizontal::ComboHorizontal() :boite_gauche{ UneBoite().cloner() }, boite_droite{ UneBoite().cloner() } { redimensionner(); };
 
 ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deux) 
 {

@@ -24,15 +24,18 @@ TypeBoite::TypeBoite(string texte)
 {
 	this->hauteur = 0;
 	this->largeur = 0;
-	extraireLignes(lignes_boite, texte);
+	extraireLignes(this->lignes_boite, texte);
 	redimensionner();
 };
 TypeBoite::TypeBoite(const vector<string>& lignes)
 {
+	this->hauteur = 0;
+	this->largeur = 0;
 	for each (string ligne in lignes)
 	{
 		lignes_boite.push_back(ligne);
 	}
+	redimensionner();
 }
 
 void TypeBoite::redimensionner()

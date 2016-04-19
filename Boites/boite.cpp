@@ -48,13 +48,6 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 		iterateur->next();
 		ligne += '|';
 		ligne += iterateur->current();
-		/*
-		int largeur_ligne = iterateur->current().length();
-		if (largeur_ligne < largeur)
-		{
-			ligne += std::string(largeur - largeur_ligne, ' ');
-		}
-		*/
 		ligne += '|';
 		os << ligne << endl;;
 	}
