@@ -1,5 +1,6 @@
 #pragma once
 #include"typeboite.h"
+#include"uneboite.h"
 #include"boite.h"
 #include"combohorizontal.h"
 
@@ -68,7 +69,7 @@ public:
 		debut = {};
 	};
 };
-
+ComboHorizontal::ComboHorizontal() :boite_gauche{UneBoite().cloner()}, boite_droite{UneBoite().cloner()} {};
 
 ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deux) 
 {
@@ -77,7 +78,7 @@ ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deu
 
 	for each (string ligne in boite_un.getLignes())
 	{
-		lignes_boite_un.push_back(ligne);
+		lignes_boite.push_back(ligne);
 	}
 	for each (string ligne in boite_deux.getLignes())
 	{
@@ -112,7 +113,7 @@ void ComboHorizontal::redimensionner()
 	largeur = 0;
 	largeur_boite_un = 0;
 	largeur_boite_deux = 0;
-	for each (string ligne in this->lignes_boite_un)
+	for each (string ligne in this->lignes_boite)
 	{
 		if (ligne.length() > largeur_boite_un)
 		{

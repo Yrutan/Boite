@@ -10,7 +10,8 @@ private:
 	std::vector<string>::const_iterator courant, fin;
 	bool debut;
 public:
-	Iterateur_UneBoite(const std::vector<string> &liste) : courant{ liste.begin() }, fin{ liste.end() }, debut{ true } {};
+	Iterateur_UneBoite(const vector<string>& lignes) 
+		: courant{ lignes.begin() }, fin{ lignes.end() }, debut{ true } {};
 	string current() const { return *courant; };
 	bool has_next() const { return courant != fin && std::next(courant) != fin; };
 	void next() { if (!debut) { ++courant; }debut = {}; };
@@ -18,17 +19,15 @@ public:
 
 class UneBoite : public TypeBoite
 {
-	std::unique_ptr<Boite> boite;
 public:
 	UneBoite();
 	UneBoite(string texte);
 	UneBoite(const vector<string>& lignes);
+	UneBoite(std::unique_ptr<TypeBoite>& boite);
 
 	unique_ptr<TypeBoite> cloner() const;
 
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur()const;
-
-	const vector<string> getLignes() const;
 };
 
 

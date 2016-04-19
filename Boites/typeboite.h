@@ -23,7 +23,7 @@ class TypeBoite
 protected:
 	int hauteur;
 	int largeur;
-	std::vector<string> lignes_boite_un;
+	std::vector<string> lignes_boite;
 	void TypeBoite::extraireLignes(vector<string>& lignes, string texte);
 
 public:
@@ -39,7 +39,7 @@ public:
 
 	int getHauteur() const;
 	int getLargeur() const;
-	virtual const vector<string> getLignes() const = 0;
+	virtual const vector<string> getLignes() const;
 };
 
 #endif

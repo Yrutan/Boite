@@ -24,14 +24,14 @@ TypeBoite::TypeBoite(string texte)
 {
 	this->hauteur = 0;
 	this->largeur = 0;
-	extraireLignes(lignes_boite_un, texte);
+	extraireLignes(lignes_boite, texte);
 	redimensionner();
 };
 TypeBoite::TypeBoite(const vector<string>& lignes)
 {
 	for each (string ligne in lignes)
 	{
-		lignes_boite_un.push_back(ligne);
+		lignes_boite.push_back(ligne);
 	}
 }
 
@@ -39,7 +39,7 @@ void TypeBoite::redimensionner()
 {
 	hauteur = 0;
 	largeur = 0;
-	for each (string ligne in this->lignes_boite_un)
+	for each (string ligne in this->lignes_boite)
 	{
 		if (ligne.length() > getLargeur())
 		{
@@ -52,3 +52,8 @@ void TypeBoite::redimensionner()
 int TypeBoite::getHauteur() const { return this->hauteur; }
 int TypeBoite::getLargeur() const { return this->largeur; }
 
+
+const vector<string> TypeBoite::getLignes() const
+{
+	return lignes_boite;
+}

@@ -18,6 +18,7 @@ protected:
 	std::unique_ptr<TypeBoite> boite_droite;
 
 public:
+	ComboHorizontal();
 	ComboHorizontal(const Boite & boite_un, const Boite & boite_deux);
 	ComboHorizontal(std::unique_ptr<TypeBoite>& boite_un, std::unique_ptr<TypeBoite>& boite_deux);
 	unique_ptr<TypeBoite> cloner() const;

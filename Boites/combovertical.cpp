@@ -7,64 +7,116 @@
 struct Iterateur_ComboVertical : Iterateur_Boite<string>
 {
 private:
-	std::vector<string> liste;
-	std::vector<string>::const_iterator courant, fin;
-	bool debut;
+	unique_ptr<Iterateur_Boite<string>> boite_haut, boite_bas;
+	bool debut_boite_haut, debut_boite_bas, fin_boite_haut, separateur_boite;
+	int largeur_boite, hauteur_boite_haut, hauteur_boite_bas;
 public:
-	Iterateur_ComboVertical(const std::vector<string> &liste) 
-		: debut{ true } 
+	Iterateur_ComboVertical(const std::unique_ptr<TypeBoite>& boite_haut, const std::unique_ptr<TypeBoite>& boite_bas)
+		: debut_boite_haut{ true }, debut_boite_bas{true}, 
+		fin_boite_haut{ false }, separateur_boite{false},
+		hauteur_boite_haut{boite_haut->getHauteur()}, hauteur_boite_bas{ boite_bas->getHauteur() }
 	{
-		for each (string ligne in liste)
+		largeur_boite = boite_haut->getLargeur();
+		if (largeur_boite < boite_bas->getLargeur())
 		{
-			this->liste.push_back(ligne);
+			largeur_boite = boite_bas->getLargeur();
 		}
-		courant = this->liste.begin();
-		fin = this->liste.end();
 	};
-	string current() const { return *courant; };
-	bool has_next() const { return courant != fin && std::next(courant) != fin; };
-	void next() { if (!debut) { ++courant; }debut = {}; };
+	string current() const 
+	{ 
+		string sortie = "";
+		if (boite_haut->has_next())
+		{
+			sortie += boite_haut->current();
+			if (sortie.length() < largeur_boite)
+			{
+				sortie += std::string(largeur_boite - sortie.length(),' ');
+			}
+		}
+		else if (fin_boite_haut && !separateur_boite)
+		{
+			sortie += std::string(largeur_boite, '-');
+		}
+		else
+		{
+			if (boite_bas->has_next())
+			{
+				sortie += boite_bas->current();
+				if (sortie.length() < largeur_boite)
+				{
+					sortie += std::string(largeur_boite - sortie.length(), ' ');
+				}
+			}
+		}
+		return sortie;
+	};
+	bool has_next() const { return boite_haut->has_next() || boite_bas->has_next();};
+	void next() 
+	{ 
+		if (!debut_boite_haut)
+		{
+			if (boite_haut->has_next())
+			{
+				boite_haut->next();
+			}
+			else if (!fin_boite_haut) //1. fin de la première boite, envoyer le séparateur
+			{
+				// atteint la fin de la boite du haut
+				fin_boite_haut = true;
+			}
+			else if(!separateur_boite)//2. séparateur déjà envoyé, commencer la deuxième boite
+			{
+				// la ligne entre la boite du haut et la boite du bas a été envoyée
+				separateur_boite = true;
+			}
+			else // 3. on a déjà envoyé la première ligne de la deuxième boite
+			{
+				if (boite_bas->has_next())
+				{
+					boite_bas->next();
+				}
+				debut_boite_bas = {};
+			}
+			debut_boite_haut = {};
+		}
+	};
 };
 
-ComboVertical::ComboVertical() 
-	:boite_duhaut{ std::move(new Boite())},
-	boite_dubas{ std::move(new Boite()) } {
+ComboVertical::ComboVertical() :boite_duhaut{UneBoite().cloner()},boite_dubas{ UneBoite().cloner()} 
+{
 	redimensionner();
 };
 ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 {
-	//boite_duhaut = boite_un;
-	for each (string ligne in boite_un.getLignes())
-	{
-		lignes_boite_un.push_back(ligne);
-	}
-	for each (string ligne in boite_deux.getLignes())
-	{
-		lignes_boite_deux.push_back(ligne);
-	}
-	//hauteur = boite_duhaut.hauteur + boite_dubas.hauteur;
-	// largeur = largest;
+	boite_duhaut = boite_un.cloner();
+	boite_dubas = boite_deux.cloner();
 	this->redimensionner();
 };
+ComboVertical::ComboVertical(std::unique_ptr<TypeBoite>& boite_un, std::unique_ptr<TypeBoite>& boite_deux)
+{
+	boite_duhaut = std::move(boite_un);
+	boite_dubas = std::move(boite_deux);
+	redimensionner();
+}
+
 
 unique_ptr<TypeBoite> ComboVertical::cloner() const
 {
 	return unique_ptr<TypeBoite>{new ComboVertical(
-		Boite(lignes_boite_un), 
-		Boite(lignes_boite_deux)
-		)};
+		boite_duhaut->cloner(), 
+		boite_dubas->cloner() )};
 };
 
 std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 {
-	return std::make_unique<Iterateur_ComboHorizontal>(boite_duhaut, boite_dubas);
+	return std::make_unique<Iterateur_ComboVertical>(boite_duhaut, boite_dubas);
 };
 
 void ComboVertical::redimensionner()
 {
 	hauteur = 0;
 	largeur = 0;
-	for each (string ligne in this->lignes_boite_un)
+	for each (string ligne in this->lignes_boite)
 	{
 		if (ligne.length() > getLargeur())
 		{
@@ -90,8 +142,7 @@ void ComboVertical::redimensionner()
 const vector<string> ComboVertical::getLignes() const
 {
 	vector<string> lignes;
-	// peut-être comme horizontal ? -
-	lignes.insert(lignes.end(), lignes_boite_un.begin(), lignes_boite_un.end());
+	lignes.insert(lignes.end(), lignes_boite.begin(), lignes_boite.end());
 	lignes.push_back(std::string(largeur, '-'));
 	lignes.insert(lignes.end(), lignes_boite_deux.begin(), lignes_boite_deux.end());
 	return lignes;
