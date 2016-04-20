@@ -12,8 +12,7 @@ private:
 	int largeur_boite, hauteur_boite_haut, hauteur_boite_bas;
 public:
 	Iterateur_ComboVertical(const std::unique_ptr<TypeBoite>& boite_haut, const std::unique_ptr<TypeBoite>& boite_bas)
-		: boite_haut{ boite_haut->enumerateur() }, boite_bas{boite_bas->enumerateur()}, 
-		debut_boite_haut{true}, fin_boite_haut{ false }, separateur_boite{false},
+		: debut_boite_haut{true}, fin_boite_haut{ false }, separateur_boite{false},
 		hauteur_boite_haut{boite_haut->getHauteur()}, hauteur_boite_bas{ boite_bas->getHauteur() }
 	{
 		largeur_boite = boite_haut->getLargeur();
@@ -21,8 +20,9 @@ public:
 		{
 			largeur_boite = boite_bas->getLargeur();
 		}
-		this->boite_haut = std::move(boite_haut->enumerateur());
-		this->boite_bas = std::move(boite_bas->enumerateur());
+		this->boite_haut = std::make_unique<Iterateur_UneBoite>(boite_haut->getLignes());
+		this->boite_bas = std::make_unique<Iterateur_UneBoite>(boite_bas->getLignes());;
+
 	};
 	string current() const 
 	{ 
@@ -108,22 +108,6 @@ ComboVertical::ComboVertical(std::unique_ptr<TypeBoite>& boite_un, std::unique_p
 
 unique_ptr<TypeBoite> ComboVertical::cloner() const
 {
-	cout << endl << "cv - cloner dans pointeur" << endl;
-	for each (string ligne in boite_duhaut->getLignes())
-	{
-		cout << ligne << endl;
-	}
-	for each (string ligne in boite_dubas->getLignes())
-	{
-		cout << ligne << endl;
-	}
-	cout << endl << "cv - cloner iterateur" << endl;
-	unique_ptr<Iterateur_Boite<string>> iterateur = enumerateur();
-	while (iterateur->has_next())
-	{
-		iterateur->next();
-		cout << iterateur->current() << endl;
-	}
 	return unique_ptr<TypeBoite>{new ComboVertical(
 		boite_duhaut->cloner(), 
 		boite_dubas->cloner() )};

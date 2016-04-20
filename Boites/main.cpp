@@ -20,7 +20,7 @@ multiligne)";
 	cout << "1 et 2" << endl;
 	cout << b0 << endl << b1 << endl;
 	ComboVertical cv{ b0, b1 };
-	cout << Boite{ cv } << endl;
+	cout << Boite{ cv } << endl;/*
 	ComboHorizontal ch{ b0, b1 };/*
 	cout << "3" << endl;
 	cout << Boite{ ch } << endl;

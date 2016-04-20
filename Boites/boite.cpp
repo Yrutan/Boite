@@ -49,7 +49,6 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 	os << '+' << endl;
 	//début du contenu de la boite
 	int largeur = bt.getLargeur();
-	int hauteur = bt.getHauteur();
 	string ligne = "";
 	unique_ptr<Iterateur_Boite<string>> iterateur = bt.enumerateur();
 	while (iterateur->has_next())

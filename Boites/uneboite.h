@@ -26,8 +26,6 @@ public:
 		}
 		courant = this->lignes.begin();
 		fin = this->lignes.end();
-		
-		
 	};
 	string current() const 
 	{ 
