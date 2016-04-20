@@ -9,9 +9,23 @@ Boite::Boite() :boite{ std::move(new UneBoite()) } {};
 Boite::Boite(string texte) :boite{ std::move(new UneBoite(texte)) } {};
 Boite::Boite(const vector<string>& lignes) :boite{ std::move(new UneBoite(lignes)) } {};
 
-Boite::Boite(const ComboVertical& cv) :boite{ std::move(cv.cloner()) } {};
+Boite::Boite(const ComboVertical& cv) :boite{ std::move(cv.cloner()) } 
+{
+	/*
+	cout << endl << "boite - cv iterateur" << endl;
+	unique_ptr<Iterateur_Boite<string>> iterateur = enumerateur();
+	while (iterateur->has_next())
+	{
+		iterateur->next();
+		cout << iterateur->current() << endl;
+	}
+	cout << endl << " boite - clone de cv" << endl;*/
+};
 
-Boite::Boite(const ComboHorizontal& ch) :boite{ std::move(ch.cloner()) } {};
+Boite::Boite(const ComboHorizontal& ch) :boite{ std::move(ch.cloner()) } 
+{
+	cout << "boite avec un ch" << endl << *this;
+};
 
 unique_ptr<TypeBoite> Boite::cloner() const
 {
@@ -26,10 +40,6 @@ std::unique_ptr<Iterateur_Boite<string>> Boite::enumerateur() const
 	return boite->enumerateur();
 };
 
-const vector<string> Boite::getLignes() const
-{
-	return boite->getLignes();
-}
 
 std::ostream& operator<<(std::ostream& os, const Boite& bt)
 {

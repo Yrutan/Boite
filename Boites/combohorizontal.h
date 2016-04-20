@@ -9,8 +9,6 @@
 class ComboHorizontal : TypeBoite
 {
 protected:
-	std::vector<string> lignes_boite_deux;
-
 	int largeur_boite_un;
 	int largeur_boite_deux;
 
@@ -25,8 +23,6 @@ public:
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur() const;
 
 	void redimensionner();
-
-	const vector<string> ComboHorizontal::getLignes() const;
 };
 
 

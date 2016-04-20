@@ -13,7 +13,7 @@ private:
 	int largeur;
 public:
 	Iterateur_UneBoite(const vector<string>& lignes) 
-		: courant{ lignes.begin() }, fin{ lignes.end() }, debut{ true } 
+		: debut{ true } 
 	{
 		largeur = 0;
 		for each (string ligne in lignes)

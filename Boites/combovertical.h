@@ -21,7 +21,6 @@ public:
 	std::unique_ptr<Iterateur_Boite<string>> enumerateur()const;
 	
 	void redimensionner();
-	const vector<string> ComboVertical::getLignes() const;
 };
 
 

@@ -75,15 +75,6 @@ ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deu
 {
 	boite_gauche = boite_un.cloner();
 	boite_droite = boite_deux.cloner();
-
-	for each (string ligne in boite_un.getLignes())
-	{
-		lignes_boite.push_back(ligne);
-	}
-	for each (string ligne in boite_deux.getLignes())
-	{
-		lignes_boite_deux.push_back(ligne);
-	}
 	redimensionner();
 };
 ComboHorizontal::ComboHorizontal(std::unique_ptr<TypeBoite>& boite_un, 
@@ -91,7 +82,6 @@ ComboHorizontal::ComboHorizontal(std::unique_ptr<TypeBoite>& boite_un,
 {
 	boite_gauche = std::move(boite_un);
 	boite_droite = std::move(boite_deux);
-
 	redimensionner();
 };
 
@@ -111,43 +101,17 @@ void ComboHorizontal::redimensionner()
 {
 	hauteur = 0;
 	largeur = 0;
-	largeur_boite_un = 0;
-	largeur_boite_deux = 0;
-	for each (string ligne in this->lignes_boite)
-	{
-		if (ligne.length() > largeur_boite_un)
-		{
-			largeur_boite_un = ligne.length();
-		}
-		++hauteur;
-	}
-	int hauteur_boite_deux = 0; 
-	for each (string ligne in this->lignes_boite_deux)
-	{
-		if (ligne.length() > largeur_boite_deux)
-		{
-			largeur_boite_deux = ligne.length();
-		}
-		++hauteur_boite_deux;
-	}
-	// compare laquelle des deux boites a la plus grande hauteur
-	if (hauteur_boite_deux > hauteur)
-	{
-		hauteur = hauteur_boite_deux;
-	}
-	largeur = largeur_boite_un + largeur_boite_deux + 1;// +1 pour la séparation entre les deux boites
-}
-
-const vector<string> ComboHorizontal::getLignes() const
-{
-	vector<string> lignes;
 
 	unique_ptr<Iterateur_Boite<string>> iterateur = enumerateur();
-
 	while (iterateur->has_next())
 	{
 		iterateur->next();
-		lignes.push_back(iterateur->current());
+		if (iterateur->current().length() > largeur)
+		{
+			this->largeur = iterateur->current().length();
+		}
+		hauteur++;
 	}
-	return lignes;
 }
+
+
