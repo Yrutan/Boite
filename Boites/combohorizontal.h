@@ -9,6 +9,11 @@
 class ComboHorizontal : TypeBoite
 {
 protected:
+<<<<<<< HEAD
+=======
+	std::vector<string> lignes_boite_deux;
+
+>>>>>>> parent of 02e3f6f... save point
 	int largeur_boite_un;
 	int largeur_boite_deux;
 

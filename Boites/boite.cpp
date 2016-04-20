@@ -56,7 +56,23 @@ std::ostream& operator<<(std::ostream& os, const Boite& bt)
 		ligne.clear();
 		iterateur->next();
 		ligne += '|';
+<<<<<<< HEAD
 		ligne += iterateur->current();
+=======
+		if (iterateur->current() != "\n")
+		{
+			ligne += iterateur->current();
+			int largeur_ligne = iterateur->current().length();
+			if (largeur_ligne < largeur)
+			{
+				ligne += std::string(largeur - largeur_ligne, ' ');
+			}
+		}
+		else
+		{
+			ligne += std::string(largeur, '-');
+		}
+>>>>>>> parent of 02e3f6f... save point
 		ligne += '|';
 		os << ligne << endl;;
 	}

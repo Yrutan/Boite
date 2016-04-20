@@ -55,8 +55,25 @@ void TypeBoite::redimensionner()
 int TypeBoite::getHauteur() const { return this->hauteur; }
 int TypeBoite::getLargeur() const { return this->largeur; }
 
+<<<<<<< HEAD
+=======
+string TypeBoite::getTexteBoiteUn() const 
+{
+	string texte = "";
+	int largeur = getLargeur();
+	for each (string ligne in lignes_boite_un)
+	{
+		texte += ligne + "\n";
+	}
+	return texte;
+}
+>>>>>>> parent of 02e3f6f... save point
 
 const vector<string> TypeBoite::getLignes() const
 {
+<<<<<<< HEAD
 	return lignes_boite;
+=======
+	return getTexteBoiteUn();
+>>>>>>> parent of 02e3f6f... save point
 }

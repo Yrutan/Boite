@@ -23,7 +23,12 @@ class TypeBoite
 protected:
 	int hauteur;
 	int largeur;
+<<<<<<< HEAD
 	std::vector<string> lignes_boite;
+=======
+	std::vector<string> lignes_boite_un;
+
+>>>>>>> parent of 02e3f6f... save point
 	void TypeBoite::extraireLignes(vector<string>& lignes, string texte);
 
 public:

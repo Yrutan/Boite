@@ -88,7 +88,12 @@ public:
 	}
 };
 
+<<<<<<< HEAD
 ComboVertical::ComboVertical() :boite_duhaut{UneBoite().cloner()},boite_dubas{ UneBoite().cloner()} 
+=======
+ComboVertical::ComboVertical() {};
+ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
+>>>>>>> parent of 02e3f6f... save point
 {
 	redimensionner();
 };
@@ -115,7 +120,22 @@ unique_ptr<TypeBoite> ComboVertical::cloner() const
 
 std::unique_ptr<Iterateur_Boite<string>> ComboVertical::enumerateur() const
 {
+<<<<<<< HEAD
 	return std::make_unique<Iterateur_ComboVertical>(boite_duhaut, boite_dubas);
+=======
+	std::vector<string> texte;
+
+	for each (string ligne in lignes_boite_un)
+	{
+		texte.push_back(ligne);
+	}
+	texte.push_back("\n");
+	for each (string ligne in lignes_boite_deux)
+	{
+		texte.push_back(ligne);
+	}
+	return std::make_unique<Iterateur_ComboVertical>(texte);
+>>>>>>> parent of 02e3f6f... save point
 };
 
 void ComboVertical::redimensionner()
@@ -134,3 +154,24 @@ void ComboVertical::redimensionner()
 	}
 }
 
+<<<<<<< HEAD
+=======
+string ComboVertical::getTexteBoiteUn() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); ++it)
+	{
+		texte += *it + "\n";
+	}
+	return texte;
+}
+string ComboVertical::getTexteBoiteDeux() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); ++it)
+	{
+		texte += *it + "\n";
+	}
+	return texte;
+}
+>>>>>>> parent of 02e3f6f... save point

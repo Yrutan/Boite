@@ -9,9 +9,13 @@
 class ComboVertical : TypeBoite
 {
 protected:
+<<<<<<< HEAD
 	std::unique_ptr<TypeBoite> boite_duhaut;
 	std::unique_ptr<TypeBoite> boite_dubas;
 
+=======
+	std::vector<string> lignes_boite_deux;
+>>>>>>> parent of 02e3f6f... save point
 public:
 	ComboVertical();
 	ComboVertical(const Boite & boite_un, const Boite & boite_deux);

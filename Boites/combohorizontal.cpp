@@ -87,6 +87,7 @@ ComboHorizontal::ComboHorizontal() :boite_gauche{ UneBoite().cloner() }, boite_d
 
 ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deux) 
 {
+<<<<<<< HEAD
 	boite_gauche = boite_un.obtenir_clone();
 	boite_droite = boite_deux.obtenir_clone();
 	redimensionner();
@@ -96,6 +97,13 @@ ComboHorizontal::ComboHorizontal(std::unique_ptr<TypeBoite>& boite_un,
 {
 	boite_gauche = std::move(boite_un);
 	boite_droite = std::move(boite_deux);
+=======
+	this->hauteur = 0;
+	this->largeur = 0;
+	extraireLignes(lignes_boite_un, boite_un.getTexte());
+	extraireLignes(lignes_boite_deux, boite_deux.getTexte());
+
+>>>>>>> parent of 02e3f6f... save point
 	redimensionner();
 };
 
@@ -129,3 +137,24 @@ void ComboHorizontal::redimensionner()
 }
 
 
+<<<<<<< HEAD
+=======
+string ComboHorizontal::getTexteBoiteUn() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_un.begin(); it != lignes_boite_un.end(); ++it)
+	{
+		texte += *it + "\n";
+	}
+	return texte;
+}
+string ComboHorizontal::getTexteBoiteDeux() const
+{
+	string texte = "";
+	for (auto it = lignes_boite_deux.begin(); it != lignes_boite_deux.end(); ++it)
+	{
+		texte += *it + "\n";
+	}
+	return texte;
+}
+>>>>>>> parent of 02e3f6f... save point
