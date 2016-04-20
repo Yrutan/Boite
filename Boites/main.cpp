@@ -17,16 +17,13 @@ multiligne)";
 	string aut_texte = "Ceci\nitou, genre";
 	Boite b0{ texte };
 	Boite b1{ aut_texte };
-	cout << "1 et 2" << endl;
 	cout << b0 << endl << b1 << endl;
 	ComboVertical cv{ b0, b1 };
-	cout << Boite{ cv } << endl;/*
-	ComboHorizontal ch{ b0, b1 };/*
-	cout << "3" << endl;
+	cout << Boite{ cv } << endl;
+	ComboHorizontal ch{ b0, b1 };
 	cout << Boite{ ch } << endl;
 	ComboVertical cvplus{ Boite{ cv }, Boite{ ch } };
-	cout << "4" << endl;
-	cout << Boite{ cvplus } << endl;/*
+	cout << Boite{ cvplus } << endl;
 	ComboHorizontal chplus{ Boite{ cv }, Boite{ ch } };
 	cout << Boite{ chplus } << endl;
 	ComboVertical cvv{ Boite{ chplus }, Boite{ "coucou" } };
@@ -58,5 +55,5 @@ multiligne)";
 	} << endl;
 	cout << Boite{
 		ComboVertical{ Boite{}, Boite{ "Yap" } }
-	} << endl; */
+	} << endl;
 }

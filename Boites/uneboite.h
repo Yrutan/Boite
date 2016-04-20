@@ -34,8 +34,22 @@ public:
 		sortie += std::string(largeur - sortie.length(), ' ');
 		return sortie;
 	};
-	bool has_next() const { return courant != fin && std::next(courant) != fin; };
-	void next() { if (!debut) { ++courant; }debut = {}; };
+	bool has_next() const 
+	{ 
+		return courant != fin && std::next(courant) != fin; 
+	};
+	void next() 
+	{ 
+		if (has_next())
+		{
+			if (!debut)
+			{
+				++courant;
+			}
+			debut = {};
+		}
+		
+	};
 };
 
 class UneBoite : public TypeBoite

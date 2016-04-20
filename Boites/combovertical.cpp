@@ -8,40 +8,42 @@ struct Iterateur_ComboVertical : Iterateur_Boite<string>
 {
 private:
 	unique_ptr<Iterateur_Boite<string>> boite_haut, boite_bas;
-	bool debut_boite_haut, fin_boite_haut, separateur_boite;
-	int largeur_boite, hauteur_boite_haut, hauteur_boite_bas;
+	bool fin_boite_haut, fin_boite_bas, separateur;
+	int largeur_boite;
 public:
-	Iterateur_ComboVertical(const std::unique_ptr<TypeBoite>& boite_haut, const std::unique_ptr<TypeBoite>& boite_bas)
-		: debut_boite_haut{true}, fin_boite_haut{ false }, separateur_boite{false},
-		hauteur_boite_haut{boite_haut->getHauteur()}, hauteur_boite_bas{ boite_bas->getHauteur() }
+	Iterateur_ComboVertical(const std::unique_ptr<TypeBoite>& boite_un, const std::unique_ptr<TypeBoite>& boite_deux)
 	{
-		largeur_boite = boite_haut->getLargeur();
-		if (largeur_boite < boite_bas->getLargeur())
-		{
-			largeur_boite = boite_bas->getLargeur();
-		}
-		this->boite_haut = std::make_unique<Iterateur_UneBoite>(boite_haut->getLignes());
-		this->boite_bas = std::make_unique<Iterateur_UneBoite>(boite_bas->getLignes());;
+		this->boite_haut = std::move(boite_un->enumerateur());
+		this->boite_bas = std::move(boite_deux->enumerateur());
 
+		fin_boite_haut = false;
+		fin_boite_bas = false;
+		separateur = false;
+
+		largeur_boite = boite_un->getLargeur();
+		if (largeur_boite < boite_deux->getLargeur())
+		{
+			largeur_boite = boite_deux->getLargeur();
+		}
 	};
 	string current() const 
 	{ 
 		string sortie = "";
-		if (boite_haut->has_next() && !fin_boite_haut)
+		if (!fin_boite_haut)
 		{
 			sortie += boite_haut->current();
 			if (sortie.length() < largeur_boite)
 			{
-				sortie += std::string(largeur_boite - sortie.length(),' ');
+				sortie += std::string(largeur_boite - sortie.length(), ' ');
 			}
-		}/*
-		else if (fin_boite_haut && !separateur_boite)// si le séparateur n'a pas encore passé
-		{
-			sortie += std::string(largeur_boite, '-');
-		}*/
+		}
 		else
 		{
-			if (boite_bas->has_next())
+			if (fin_boite_haut && !separateur)
+			{
+				sortie += std::string(largeur_boite, '-');
+			}
+			else if (!fin_boite_bas)
 			{
 				sortie += boite_bas->current();
 				if (sortie.length() < largeur_boite)
@@ -54,37 +56,36 @@ public:
 	};
 	bool has_next() const 
 	{ 
-		return boite_haut->has_next() || boite_bas->has_next();
+		return (boite_haut->has_next() || boite_bas->has_next());
 	};
-	void next() 
-	{ 
-		if (!debut_boite_haut)
+	void next()
+	{
+		if (boite_haut->has_next())
 		{
-			if (boite_haut->has_next())
+			boite_haut->next();
+		}
+		else if(!fin_boite_haut)
+		{
+			fin_boite_haut = true;//1. va afficher le separateur
+		}
+		else
+		{
+			if (!separateur)
 			{
-				boite_haut->next();
+				//2. separateur affiché, le "désactiver"
+				// et commencer la deuxième boite
+				separateur = true;
 			}
-			else if (!fin_boite_haut) //1. fin de la première boite, envoyer le séparateur
+			if (boite_bas->has_next())
 			{
-				// atteint la fin de la boite du haut
-				fin_boite_haut = true;
-			}/*
-			else if(!separateur_boite)//2. séparateur déjà envoyé, commencer la deuxième boite
+				boite_bas->next();
+			}
+			else
 			{
-				// la ligne entre la boite du haut et la boite du bas a été envoyée
-				separateur_boite = true;
-				// 2. la première ligne de la deuxième boite va être envoyé
-			}*/
-			else // 3. on a déjà envoyé la première ligne de la deuxième boite
-			{
-				if (boite_bas->has_next())
-				{
-					boite_bas->next();
-				}
+				fin_boite_bas = false;
 			}
 		}
-		debut_boite_haut = {};
-	};
+	}
 };
 
 ComboVertical::ComboVertical() :boite_duhaut{UneBoite().cloner()},boite_dubas{ UneBoite().cloner()} 
@@ -93,9 +94,8 @@ ComboVertical::ComboVertical() :boite_duhaut{UneBoite().cloner()},boite_dubas{ U
 };
 ComboVertical::ComboVertical(const Boite & boite_un, const Boite & boite_deux)
 {
-	boite_duhaut = boite_un.cloner();
-	boite_dubas = boite_deux.cloner();
-
+	boite_duhaut = std::move(boite_un.obtenir_clone());
+	boite_dubas = std::move(boite_deux.obtenir_clone());
 	this->redimensionner();
 };
 ComboVertical::ComboVertical(std::unique_ptr<TypeBoite>& boite_un, std::unique_ptr<TypeBoite>& boite_deux)

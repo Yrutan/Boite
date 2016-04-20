@@ -8,12 +8,14 @@ struct Iterateur_ComboHorizontal : Iterateur_Boite<string>
 {
 private:
 	unique_ptr<Iterateur_Boite<string>> boite_gauche, boite_droite;
-	bool debut;
+	bool fin_boite_gauche, fin_boite_droite;
 	int largeur_boite_gauche, largeur_boite_droite, hauteur_boite;
 public:
 	Iterateur_ComboHorizontal(const std::unique_ptr<TypeBoite>& boite_gauche, const std::unique_ptr<TypeBoite>& boite_droite)
-		: debut{ true }, largeur_boite_gauche{ boite_gauche->getLargeur() }, largeur_boite_droite{ boite_droite->getLargeur() }
+		: largeur_boite_gauche{ boite_gauche->getLargeur() }, largeur_boite_droite{ boite_droite->getLargeur() }
 	{
+		fin_boite_gauche = false;
+		fin_boite_droite = false;
 		hauteur_boite = boite_gauche->getHauteur();
 		if (hauteur_boite < boite_droite->getHauteur())
 		{
@@ -30,18 +32,26 @@ public:
 	string current() const
 	{
 		string sortie = "";
-		if (boite_gauche->has_next())
+		if (!fin_boite_gauche)
 		{
 			sortie += boite_gauche->current();
+			if (sortie.length() < largeur_boite_gauche)
+			{
+				sortie += std::string(largeur_boite_gauche - sortie.length(), ' ');
+			}
 		}
 		else
 		{
 			sortie += std::string(largeur_boite_gauche,' ');
 		}
 		sortie += "|";
-		if (boite_droite->has_next())
+		if (!fin_boite_droite)
 		{
 			sortie += boite_droite->current();
+			if (boite_droite->current().length() < largeur_boite_droite)
+			{
+				sortie += std::string(largeur_boite_droite - boite_droite->current().length(), ' ');
+			}
 		}
 		else
 		{
@@ -55,26 +65,30 @@ public:
 	};
 	void next()
 	{
-		if (!debut)
+		if (boite_gauche->has_next())
 		{
-			if (boite_gauche->has_next())
-			{
-				boite_gauche->next();
-			}
-			if (boite_droite->has_next())
-			{
-				boite_droite->next();
-			}
+			boite_gauche->next();
 		}
-		debut = {};
+		else
+		{
+			fin_boite_gauche = true;
+		}
+		if (boite_droite->has_next())
+		{
+			boite_droite->next();
+		}
+		else
+		{
+			fin_boite_droite = true;
+		}
 	};
 };
 ComboHorizontal::ComboHorizontal() :boite_gauche{ UneBoite().cloner() }, boite_droite{ UneBoite().cloner() } { redimensionner(); };
 
 ComboHorizontal::ComboHorizontal(const Boite & boite_un, const Boite & boite_deux) 
 {
-	boite_gauche = boite_un.cloner();
-	boite_droite = boite_deux.cloner();
+	boite_gauche = boite_un.obtenir_clone();
+	boite_droite = boite_deux.obtenir_clone();
 	redimensionner();
 };
 ComboHorizontal::ComboHorizontal(std::unique_ptr<TypeBoite>& boite_un, 
